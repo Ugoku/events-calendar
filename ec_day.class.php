@@ -77,8 +77,8 @@ class EC_Day {
 	 */
 	function display($d) {
 ?>
-    <link type="text/css" rel="stylesheet" href="<?php bloginfo('siteurl');?>/wp-includes/js/thickbox/thickbox.css" />
-    <link type="text/css" rel="stylesheet" href="<?php echo EVENTSCALENDARCSSURL;?>/events-calendar.css" />
+    <link type="text/css" rel="stylesheet" href="<?php bloginfo('siteurl');?>/wp-includes/js/thickbox/thickbox.css">
+    <link type="text/css" rel="stylesheet" href="<?php echo EVENTSCALENDARCSSURL;?>/events-calendar.css">
 <?php
     $options = get_option('optionsEventsCalendar');
     $events = $this->db->getDaysEvents($d);
@@ -89,7 +89,7 @@ class EC_Day {
     foreach($events as $event) {
       if(($event->accessLevel == 'public') || (current_user_can($event->accessLevel))) {
         $title = stripslashes($event->eventTitle);
-        $description = preg_replace('#\r?\n#', '<br />', $event->eventDescription);
+        $description = preg_replace('#\r?\n#', '<br>', $event->eventDescription);
         $description = stripslashes($description);
         $location = stripslashes($event->eventLocation);
         $PostID = isset($event->postID) ? $event->postID : '';
@@ -128,7 +128,7 @@ class EC_Day {
         if ($PostID != '') {
           $IDtmp = get_post($PostID);
           $ptitle = $IDtmp->post_title;
-          $output .= '<div for="EC_postid" class="EC_linkout_and_postid"><strong>'._c('Post','events-calendar').' ('.$PostID.')</strong></div><a href="'.get_permalink($PostID).'" target="_parent"/>'.stripslashes($ptitle).'</a><br />';
+          $output .= '<div for="EC_postid" class="EC_linkout_and_postid"><strong>'._c('Post','events-calendar').' ('.$PostID.')</strong></div><a href="'.get_permalink($PostID).'" target="_parent"/>'.stripslashes($ptitle).'</a><br>';
         }
         echo $output;
       } // if

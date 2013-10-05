@@ -8,22 +8,15 @@
  * @package			WP-Events-Calendar
  * @since			1.0
  * 
- * @autbor			Luke Howell <luke@wp-eventscalendar.com>
+ * @autbor			Luke Howell <luke@wp-eventscalendar.com>, Ugoku <wordpress@ugoku.nl>
  *
- * @copyright			Copyright (c) 2007-2009 Luke Howell
+ * @copyright			Copyright (c) 2007-2009 Luke Howell, 2013 Ugoku
  *
  * @license			GPLv3 {@link http://www.gnu.org/licenses/gpl}
  * @filesource
  */
 /*
 --------------------------------------------------------------------------
-$Id$
---------------------------------------------------------------------------
-This file is part of the WordPress Events Calendar plugin project.
-
-For questions, help, comments, discussion, etc., please join our
-forum at {@link http://www.wp-eventscalendar.com/forum}. You can
-also go to Luke's ({@link http://www.lukehowelll.com}) blog.
 
 WP Events Calendar is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -40,30 +33,36 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 --------------------------------------------------------------------------
 */
 
-if(!class_exists('EventsCalendar')) :
-require_once(EVENTSCALENDARCLASSPATH . '/ec_widget.class.php');
-require_once(EVENTSCALENDARCLASSPATH . '/ec_management.class.php');
+if (!class_exists('EventsCalendar'))
+{
+	require_once(EVENTSCALENDARCLASSPATH . '/ec_widget.class.php');
+	require_once(EVENTSCALENDARCLASSPATH . '/ec_management.class.php');
 
-class EventsCalendar {
-  var $widget;
-  var $management;
+	class EventsCalendar
+	{
+		var $widget;
+		var $management;
 
-  function EventsCalendar() {
-    $this->widget = new EC_Widget();
-	  $this->management = new EC_Management();
-  }
+		function EventsCalendar()
+		{
+			$this->widget = new EC_Widget();
+			$this->management = new EC_Management();
+		}
 
-  function displayWidget($args) {
-	  $this->widget->display($args);
-  }
+		function displayWidget($args)
+		{
+			$this->widget->display($args);
+		}
 
-  function displayManagementPage() {
-    $this->management->display();
-  }
+		function displayManagementPage()
+		{
+			$this->management->display();
+		}
 
-  function displayOptionsPage() {
-    $this->management->calendarOptions();
-  }
+		function displayOptionsPage()
+		{
+			$this->management->calendarOptions();
+		}
+	}
 }
-endif;
 ?>

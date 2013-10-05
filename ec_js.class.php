@@ -209,9 +209,9 @@ class EC_JS {
 				if ($format == $elemnts_date[0]) //added by pepawo
 					$elemnts_date = explode('.', $format); //added by pepawo
         
-				if (($format == $elemnts_date[0]) || ($elemnts_date[2] == Null )) {
-
-					echo '<script type="text/javascript">alert("' 
+				if (($format == $elemnts_date[0]) || ($elemnts_date[2] == null ))
+				{
+					echo '<script>alert("'
 						. __('Review your Large Calendar Date Format in the Events-Calendars options ;-)','events-calendar')
 					  	. '");</script>';
 					exit;
@@ -283,7 +283,7 @@ class EC_JS {
 				ecd.jq(this).css('cursor', 'pointer');
       		})
 			.click(function() {
-				ecd.jq('#EC_loadingPane').append('<img src="<?php echo EVENTSCALENDARIMAGESURL . '/loading.gif';?>" style="width:50px;" />');
+				ecd.jq('#EC_loadingPane').append('<img src="<?php echo EVENTSCALENDARIMAGESURL . '/loading.gif';?>" style="width:50px;">');
 				ecd.jq.get("<?php bloginfo('siteurl');?>/index.php",
 					{EC_action: "switchMonth", EC_month: <?php echo $month-1;?>, EC_year: <?php echo $year;?>},
 					function(ecdata) {
@@ -297,7 +297,7 @@ class EC_JS {
 				ecd.jq(this).css('cursor', 'pointer');
       		})
 			.click(function() {
-				ecd.jq('#EC_loadingPane').append('<img src="<?php echo EVENTSCALENDARIMAGESURL . '/loading.gif';?>" style="width:50px;" />');
+				ecd.jq('#EC_loadingPane').append('<img src="<?php echo EVENTSCALENDARIMAGESURL . '/loading.gif';?>" style="width:50px;">');
 				ecd.jq.get("<?php bloginfo('siteurl');?>/index.php",
 					{EC_action: "switchMonth", EC_month: <?php echo ($month+1);?>, EC_year: <?php echo $year;?>},
 					function(ecdata) {
@@ -352,7 +352,7 @@ class EC_JS {
 					// $output = '';
 					$id = "$d-$e->id";
 					$title = $e->eventTitle;
-					$description = preg_replace('#\r?\n#', '<br />', $e->eventDescription);
+					$description = preg_replace('#\r?\n#', '<br>', $e->eventDescription);
 					if (strlen($description) > 750)
 						$description = substr($description, 0, 750). ' (...)';
 					$location = isset($e->eventLocation) && !empty($e->eventLocation) ? $e->eventLocation : '';
@@ -540,7 +540,7 @@ class EC_JS {
     if($e->accessLevel == 'public' || $current_user->has_cap($e->accessLevel)) {
       $id = "$e->id";
       $title = $e->eventTitle;
-      $description = preg_replace('#\r?\n#', '<br />', $e->eventDescription);
+      $description = preg_replace('#\r?\n#', '<br>', $e->eventDescription);
       $location = isset($e->eventLocation) && !empty($e->eventLocation) ? $e->eventLocation : '';
       list($ec_startyear, $ec_startmonth, $ec_startday) = explode("-", $e->eventStartDate);
         if(!is_null($e->eventStartTime) && !empty($e->eventStartTime)) {
@@ -564,27 +564,26 @@ class EC_JS {
 
         $endDate = date($options['dateFormatLarge'], mktime($ec_endhour, $ec_endminute, $ec_endsecond, $ec_endmonth, $ec_endday, $ec_endyear));
       $accessLevel = $e->accessLevel;
-      $output .= "<strong>"._c('Title','events-calendar').": </strong>$title<br />";
+      $output .= "<strong>"._c('Title','events-calendar').": </strong>$title<br>";
       if(!empty($location) && !is_null($location))
-        $output .= "<strong>"._c('Location','events-calendar').": </strong>$location<br />";
+        $output .= "<strong>"._c('Location','events-calendar').": </strong>$location<br>";
       if(!empty($description) && !is_null($description))
-        $output .= "<strong>"._c('Description','events-calendar').": </strong>$description<br />";
+        $output .= "<strong>"._c('Description','events-calendar').": </strong>$description<br>";
       if($startDate != $endDate )
-        $output .= "<strong>"._c('Start Date','events-calendar').": </strong>$startDate<br />";
+        $output .= "<strong>"._c('Start Date','events-calendar').": </strong>$startDate<br>";
       if(!empty($startTime) || !is_null($startTime))
-        $output .= "<strong>"._c('Start Time','events-calendar').": </strong>$startTime<br />";
+        $output .= "<strong>"._c('Start Time','events-calendar').": </strong>$startTime<br>";
       if($startDate != $endDate)
-        $output .= "<strong>"._c('End Date','events-calendar').": </strong>$endDate<br />";
+        $output .= "<strong>"._c('End Date','events-calendar').": </strong>$endDate<br>";
       if(!empty($endTime) && !empty($startTime) || !is_null($endTime) && !is_null($startTime))
-        $output .= "<strong>"._c('End Time','events-calendar').": </strong>$endTime<br />";
+        $output .= "<strong>"._c('End Time','events-calendar').": </strong>$endTime<br>";
     }
     if($output != ''):
 		 if (preg_match("/\'/", $output))
 			 $output = stripslashes($output);
 
 ?>
-<script type="text/javascript">
-// <![CDATA[
+<script>
 //jQuery.noConflict();
 //(function($) {
 <?php 
@@ -604,7 +603,6 @@ class EC_JS {
 		});
 	});
 //})(jQuery);
-//]]>
 </script>
 <?php
     endif;

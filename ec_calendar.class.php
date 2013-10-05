@@ -45,10 +45,6 @@ $ecoptions = get_option('optionsEventsCalendar');
 $ec_hide = $ecoptions['hidesponsor'] == 'true' ? 'display:none;' : '';
 $widget_sponsor_message = '';
 $large_sponsor_message = '';
-// if(!$ec_hide) {
-	// $widget_sponsor_message = '<span style="font-size:.75em;">WPEC is proudly sponsored by <br /><a href="http://www.truemediaconcepts.com">True Media Concepts</a></span>' . "\n";
-	// $large_sponsor_message = '<span style="font-size:.7em;">WP Events Calendar is proudly sponsored by <a href="http://www.truemediaconcepts.com">True Media Concepts</a></span>' . "\n";
-// }
 /**
  * Displays the events list and the calendars
  *
@@ -268,7 +264,7 @@ class EC_Calendar {
 
 		// initial empty days
 		// todo this does a colpan. But me think we could just loop through
-		// the days and output their cells. would look nicer... just my 2¢.
+		// the days and output their cells. would look nicer... just my 2ï¿½.
 		if ($weekday > 0)
 			$calendar .= '<td colspan="'.$weekday.'" class="padday">&nbsp;</td>' . "\n";
 		
@@ -299,8 +295,7 @@ class EC_Calendar {
 		$calendar .= '</tr></tbody></table>' . "\n";
 
 		// load the Thickbox script
-		$start_script  = '<script type="text/javascript">' . "\n";
-		$start_script .= '// <![CDATA[' . "\n";
+		$start_script  = '<script>' . "\n";
 		$start_script .= 'tb_pathToImage ="'.get_option('siteurl').'/wp-includes/js/thickbox/loadingAnimation.gif";'."\n";
 		$start_script .= 'tb_closeImage = "'.get_option('siteurl').'/wp-includes/js/thickbox/tb-close.png";'."\n";
 
@@ -327,7 +322,6 @@ class EC_Calendar {
 		// closing the JS.
 		$end_script  = "\t" . '});' . "\n";
 		$end_script .= '})(jQuery);' . "\n";
-		$end_script .= '//]]>' . "\n";
 		$end_script .= '</script>' . "\n";
 
 		// output the calendar
@@ -400,12 +394,7 @@ class EC_Calendar {
 		// 		$html->table(array('id'=>'CalendarLarge-Header', 'class' => 'calendar-large'));
 		// 		etc.
 		//
-		// todo 	We really need to get rid of all the inline CSS. I won't do it in the 6.5.2.x
-		// 		series but after 7.0 is out, guest what? I'm gonna bug the hell out of the team
-		// 		to make sure each and every CSS is out to stylesheet. NO MORE ALIGN="LEFT"
-		// 		For crying out loud,I was using that in 1996, along with font-face and the
-		// 		infamous blink thingy... 
-		// 		-- Louis
+		//TODO: We really need to get rid of all the inline CSS.
 		//
 		$ajax_loader = EVENTSCALENDARIMAGESURL . '/ajax-loader.gif';
 		$calendar  = <<<EOHTML
@@ -414,7 +403,7 @@ class EC_Calendar {
 	<table id="CalendarLarge-Header" cellspacing="0" cellpadding="0" width="100%" border="0">
 	<tr>
 		<td width="25%"><div align="left"><span id="EC_previousMonthLarge"></span></div></td>
-		<td width="50%"><div id="EC_current-month" align="center"><div id="EC_ajaxLoader"><img src="$ajax_loader" /></div>$titMonth $year</div></td>
+		<td width="50%"><div id="EC_current-month" align="center"><div id="EC_ajaxLoader"><img src="$ajax_loader"></div>$titMonth $year</div></td>
 		<td width="25%" align="right"><span id="EC_nextMonthLarge"></span></td>
 	</tr>
 	</table>
@@ -460,7 +449,7 @@ EOHTML;
 		if($weekday != 7)
 			$calendar .= '<td colspan="'.(7-$weekday).'" class="pad">&nbsp;</td>'."\n"; //remaining "empty" days
 		
-		$calendar .= "</tr></tbody></table>\n".'<script type="text/javascript">'."\n".'// <![CDATA['."\n";
+		$calendar .= "</tr></tbody></table>\n".'<script>'."\n";
 		$calendar .= ' jQuery.noConflict();'."\n".' (function($) {'."\n".' ecd.jq(document).ready(function() {'."\n";
 		
 		if($echo !== false){
@@ -470,7 +459,7 @@ EOHTML;
 			
 			echo $js->calendarDataLarge($month, $year);
 
-			echo ' });'."\n".' })(jQuery);'."\n".'//]]>'."\n".'</script>'."\n".$large_sponsor_message.'</div>';
+			echo ' });'."\n".' })(jQuery);'."\n".'</script>'."\n".$large_sponsor_message.'</div>';
 		
 		}else{
 			return $before_large_calendar . $calendar . $js->calendarDataLarge($month, $year, false) . ' });'."\n".' })(jQuery);'."\n".'//]]>'."\n".'</script>'."\n".$large_sponsor_message.'</div>';
@@ -521,7 +510,7 @@ EOHTML;
 		
 		$calendar = '<div class="ec-wrap">'."\n";
 
-		$calendar .= '<h2 style="padding-right:0;text-align:center;"><a href="?page=events-calendar&amp;EC_action=switchMonthAdmin&amp;EC_month='.($month-1).'&amp;EC_year='.($year).'">&#171; '.$previousMonth.'</a> &mdash; '. __('Events','events-calendar') .' ('.$title.') &mdash; <a href="?page=events-calendar&amp;EC_action=switchMonthAdmin&amp;EC_month='.($month+1).'&amp;EC_year='.($year).'">'.$nextMonth.' &#187;</a></h2><hr />';
+		$calendar .= '<h2 style="padding-right:0;text-align:center;"><a href="?page=events-calendar&amp;EC_action=switchMonthAdmin&amp;EC_month='.($month-1).'&amp;EC_year='.($year).'">&#171; '.$previousMonth.'</a> &mdash; '. __('Events','events-calendar') .' ('.$title.') &mdash; <a href="?page=events-calendar&amp;EC_action=switchMonthAdmin&amp;EC_month='.($month+1).'&amp;EC_year='.($year).'">'.$nextMonth.' &#187;</a></h2><hr>';
 		
 		$calendar .= '<table width="98%" summary="Admin Event Calendar" id="wp-calendar"><thead><tr>';
 
