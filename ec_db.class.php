@@ -58,7 +58,8 @@ if(!class_exists('EC_DB')):
  * @package WP-Events-Calendar
  * @since   6.0  
  */
-class EC_DB {
+class EC_DB
+{
 
 	/**
 	 * Holds an instance of the $wpdb object.
@@ -92,7 +93,8 @@ class EC_DB {
 	 * Constructor. 
 	 * Loads the $wpdb global object and makes sure we have the good table name
 	 */
-	function EC_DB() {
+	function EC_DB()
+	{
 		global $wpdb;
 		$this->dbVersion = "108";
 		$this->db = $wpdb;
@@ -113,8 +115,10 @@ class EC_DB {
 	 *       if the eventscalendar_db_version is false or different
 	 *       from the new version, we just execute the SQL.
 	 */
-	function createTable() {
-		if ($this->db->get_var("show tables like '$this->mainTable'") != $this->mainTable ) {
+	function createTable()
+	{
+		if ($this->db->get_var("show tables like '$this->mainTable'") != $this->mainTable )
+		{
 			$sql = "CREATE TABLE " . $this->mainTable . " (
 				id mediumint(9) NOT NULL AUTO_INCREMENT,
 				eventTitle varchar(255) CHARACTER SET utf8 NOT NULL,
@@ -133,8 +137,9 @@ class EC_DB {
 			require_once(ABSPATH . "wp-admin/upgrade-functions.php");
 			dbDelta($sql);
 
-			// Request whithout CHARACTER SET utf8 if the CREATE TABLE failed
-			if ($this->db->get_var("show tables like '$this->mainTable'") != $this->mainTable ) {
+			// Request without CHARACTER SET utf8 if the CREATE TABLE failed
+			if ($this->db->get_var("show tables like '$this->mainTable'") != $this->mainTable )
+			{
 				$sql = str_replace("CHARACTER SET utf8 ","",$sql);
 				dbDelta($sql);
 			}
@@ -143,7 +148,8 @@ class EC_DB {
 
 		$installed_ver = get_option( "events_calendar_db_version" );
 
-		if ($installed_ver != $this->dbVersion) {
+		if ($installed_ver != $this->dbVersion)
+		{
 			$sql = "CREATE TABLE " . $this->mainTable . " (
 				id mediumint(9) NOT NULL AUTO_INCREMENT,
 				eventTitle varchar(255) CHARACTER SET utf8 NOT NULL,
@@ -179,8 +185,8 @@ class EC_DB {
 	 * There are two sets of options, the Events Calendar general options
 	 * and the widget options.
 	 */
-	function initOptions() {
-
+	function initOptions()
+	{
 		$options = get_option('optionsEventsCalendar');
 		if(!is_array($options)) $options = array();
 		if (!isset($options['dateFormatWidget'])) $options['dateFormatWidget'] = 'm-d';
@@ -188,10 +194,10 @@ class EC_DB {
 		if (!isset($options['dateFormatLarge'])) $options['dateFormatLarge'] = 'n/j/Y';
 		if (!isset($options['timeFormatLarge'])) $options['timeFormatLarge'] = 'g:i a';
 		if (!isset($options['timeStep'])) $options['timeStep'] = '30';
-		if (!isset($options['adaptedCSS'])) $options['adaptedCSS'] = '';
+		if (!isset($options['adaptedCSS'])) $options['adaptedCSS'] = ''; //TODO: remove this option
 		if (!isset($options['jqueryextremstatus'])) $options['jqueryextremstatus'] = 'false';
-		if (!isset($options['todayCSS'])) $options['todayCSS'] = 'border:thin solid blue;font-weight: bold;';
-		if (!isset($options['dayHasEventCSS'])) $options['dayHasEventCSS'] = 'color:red;';
+		if (!isset($options['todayCSS'])) $options['todayCSS'] = 'border:thin solid blue;font-weight: bold;'; //TODO: remove this option
+		if (!isset($options['dayHasEventCSS'])) $options['dayHasEventCSS'] = 'color:red;'; //TODO: remove this option
 		if (!isset($options['daynamelength'])) $options['daynamelength'] = '3';
 		if (!isset($options['daynamelengthLarge'])) $options['daynamelengthLarge'] = '3';
 		if (!isset($options['accessLevel'])) $options['accessLevel'] = 'level_10';
@@ -224,37 +230,20 @@ class EC_DB {
 	 * @param int 		$accessLevel 		who has access to this event
 	 * @param int 		$postId 		post id if use activated it
 	 */
-	function addEvent($title, $location, $linkout, $description, $startDate, $startTime, $endDate, $endTime, $accessLevel, $postID) {
+	function addEvent($title, $location, $linkout, $description, $startDate, $startTime, $endDate, $endTime, $accessLevel, $postID)
+	{
 		global $wpdb;
-		/*$postID = is_null($postID) ? "NULL" : "'$postID'";
-		$location = is_null($location) ? "NULL" : "'$location'";
-		$description = is_null($description) ? "NULL" : "'$description'";
-		$startDate = is_null($startDate) ? "NULL" : "'$startDate'";
-		$endDate = is_null($endDate) ? "NULL" : "'$endDate'";
-		$linkout = is_null($linkout) ? "NULL" : "'$linkout'";
-		$startTime = is_null($startTime) ? "NULL" : "'$startTime'";
-		$accessLevel = is_null($accessLevel) ? "NULL" : "'$accessLevel'";
-		$endTime = is_null($endTime) ? "NULL" : "'$endTime'";
-		*/
-
-		/*$sql = "INSERT INTO `$this->mainTable` ("
-			 ."`id`, `eventTitle`, `eventDescription`, `eventLocation`, `eventLinkout`,`eventStartDate`, `eventStartTime`, `eventEndDate`, `eventEndTime`, `accessLevel`, `postID`) "
-			 ."VALUES ("
-			 ."NULL , '$title', $description, $location, $linkout, $startDate, $startTime, $endDate, $endTime , $accessLevel, $postID);";
-
-		$this->db->query($sql);*/
-		
-		// Fix for sql injection possibility by @zap1989
-		$postID = is_null($postID) ? null : "$postID";
-		$location = is_null($location) ? null : "$location";
-		$description = is_null($description) ? null : "$description";
-		$startDate = is_null($startDate) ? null : "$startDate";
-		$endDate = is_null($endDate) ? null : "$endDate";
-		$linkout = is_null($linkout) ? null : "$linkout";
-		$startTime = is_null($startTime) ? null : "$startTime";
-		$accessLevel = is_null($accessLevel) ? null : "$accessLevel";
-		$endTime = is_null($endTime) ? null : "$endTime";
-		
+/*
+		$postID = is_null($postID) ? null : $postID;
+		$location = is_null($location) ? null : $location;
+		$description = is_null($description) ? null : $description;
+		$startDate = is_null($startDate) ? null : $startDate;
+		$endDate = is_null($endDate) ? null : $endDate;
+		$linkout = is_null($linkout) ? null : $linkout;
+		$startTime = is_null($startTime) ? null : $startTime;
+		$accessLevel = is_null($accessLevel) ? null : $accessLevel;
+		$endTime = is_null($endTime) ? null : $endTime;
+*/
 		$wpdb->insert(
 			$this->mainTable,
 			array(
@@ -287,12 +276,13 @@ class EC_DB {
 	 * @param int 		$accessLevel 		who can access this event
 	 * @param int 		$postId 		post id if use activated it
 	 */
-	function editEvent($id, $title, $location, $linkout, $description, $startDate, $startTime, $endDate, $endTime, $accessLevel, $postID) {
+	function editEvent($id, $title, $location, $linkout, $description, $startDate, $startTime, $endDate, $endTime, $accessLevel, $postID)
+	{
 		global $wpdb;
 		// just to make sure
 		if (empty ($id))
 			return;
-
+/*
 		$postID = is_null($postID) ? null : $postID;
 		$location = is_null($location) ? null : $location;
 		$description = is_null($description) ? null : $description;
@@ -302,7 +292,7 @@ class EC_DB {
 		$startTime = is_null($startTime) ? null : $startTime;
 		$accessLevel = is_null($accessLevel) ? null : $accessLevel;
 		$endTime = is_null($endTime) ? null : $endTime;
-		
+*/
 		$wpdb->update(
 			$this->mainTable,
 			array(
@@ -327,12 +317,13 @@ class EC_DB {
 	 * Deletes an event.
 	 * @param int $id 		ID of the event to delete.
 	 */
-	function deleteEvent($id) {
+	function deleteEvent($id)
+	{
 		if (empty($id))
 			return;
 
-		$sql = "DELETE FROM `$this->mainTable` WHERE `id` = %d";
-		$this->db->query($this->db->prepare($sql,(int)$id));
+		$sql = "DELETE FROM `" . $this->mainTable . "` WHERE `id` = %d";
+		$this->db->query($this->db->prepare($sql, (int) $id));
 	}
 
 	/**
@@ -341,11 +332,12 @@ class EC_DB {
 	 * @param date $d
 	 * @return array 
 	 */
-	function getDaysEvents($d) {
+	function getDaysEvents($d)
+	{
 		$sql = "SELECT *"
-		 	. "  FROM `$this->mainTable`"
-		  	. " WHERE `eventStartDate` <= '$d'"
-			. "   AND `eventEndDate` >= '$d'"
+		 	. "  FROM `" . $this->mainTable . "`"
+			. " WHERE `eventStartDate` <= '" . $d . "'"
+			. "   AND `eventEndDate` >= '" . $d . "'"
 			. " ORDER BY `eventStartTime`, `eventEndTime`;";
 		return $this->db->get_results($sql);
 	}
@@ -358,7 +350,7 @@ class EC_DB {
 	 */
 	function getEvent($id)
 	{
-		$sql = "SELECT * FROM `$this->mainTable` WHERE `id` = $id LIMIT 1;";
+		$sql = "SELECT * FROM `" . $this->mainTable . "` WHERE `id` = " . $id . " LIMIT 1;";
 		return $this->db->get_results($sql);
 	}
 

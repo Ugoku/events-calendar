@@ -1678,13 +1678,13 @@ function extendRemove(target, props) {
 		if (props[name] == null || props[name] == undefined)
 			target[name] = props[name];
 	return target;
-};
+}
 
 /* Determine whether an object is an array. */
 function isArray(a) {
 	return (a && (($.browser.safari && typeof a == 'object' && a.length) ||
 		(a.constructor && a.constructor.toString().match(/\Array\(\)/))));
-};
+}
 
 /* Invoke the datepicker functionality.
    @param  options  string - a command, optionally followed by additional parameters or

@@ -96,15 +96,6 @@ if (!class_exists('EC_Widget'))
 				$this->year = $_GET['EC_action'] == 'switchMonth' ? (int)$_GET['EC_year'] : date('Y');
 			}
 		}
-		/**
-		 * Prehistoric constructor. Calls the PHP5 constructor.
-		 *
-		 * @since 6.0
-		 */
-		function EC_Widget()
-		{
-			$this->__construct();
-		}
 
 		/**
 		 * Displays the widget.

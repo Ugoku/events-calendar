@@ -87,12 +87,14 @@ class EC_Calendar
 	 * @return string 			substring to return
 	 * @access private
     */
-	function utf8_substr($str, $start, $length)	{
-		if (DB_CHARSET == 'utf8') {
-			preg_match_all('/./u', $str, $ar);
-			return join("", array_slice($ar[0], $start, $length));
+	function utf8_substr($str, $start, $length)
+	{
+		if (DB_CHARSET == 'utf8')
+		{
+			preg_match_all ('/./u', $str, $ar);
+			return join ("", array_slice ($ar[0], $start, $length));
 		} else {
-			return substr($str, $start, $length);
+			return substr ($str, $start, $length);
 		}
 	}
 	
@@ -115,14 +117,16 @@ class EC_Calendar
 		
 		$output = '<ul id="events-calendar-list">';
 
-		foreach($events as $event) {
-			if ($event->accessLevel == 'public' || $current_user->has_cap($event->accessLevel)) {
+		foreach($events as $event)
+		{
+			if ($event->accessLevel == 'public' || $current_user->has_cap($event->accessLevel))
+			{
 				$splitDate = explode("-", $event->eventStartDate);
 				$month = $splitDate[1];
 				$day = $splitDate[2];
 				$year = $splitDate[0];
 				$timeStp = mktime(0, 0, 0, $month, $day, $year);
-				$startDate = date("$format", $timeStp );
+				$startDate = date($format, $timeStp );
 				$day_names = ucfirst($this->locale->get_weekday(date('w', $timeStp )));
 				
 				if( $day_name_length)
@@ -131,7 +135,7 @@ class EC_Calendar
 				$PostID = isset($event->postID) ? $event->postID : '';
 				
 				if ($PostID == '')
-					$titlinked = '<strong>'.$day_names.' '.$startDate.'</strong>: ' . $event->eventTitle;
+					$titlinked = '<strong>' . $day_names . ' ' . $startDate . '</strong>: ' . $event->eventTitle;
 				else
 					$titlinked = '<a href="' . get_permalink($PostID) . '">'
 								  . '<strong>' . $day_names . ' ' . $startDate . '</strong>' . __(': ', 'events-calendar')
@@ -142,17 +146,16 @@ class EC_Calendar
 					$titlinked = stripslashes($titlinked);
 
 				//$startDate = $startDate < date("$format") ? date("$format") : $startDate;
-				$output .= '<li id="events-calendar-list-' . $event->id . '">' . $titlinked .'</li>' . "\n";
+				$output .= '<li id="events-calendar-list-' . $event->id . '">' . $titlinked . '</li>' . "\n";
 			}
 		}
 
 		$output .= "</ul>";
 		
-		// $output='<ul id="events-calendar-list"></ul>'; // for tests
-		if ($output == '<ul id="events-calendar-list"></ul>') {
+		if ($output == '<ul id="events-calendar-list"></ul>')
+		{
 			echo '<ul><li id="no-events-in-list"><strong>', __('Events are coming soon, stay tuned!','events-calendar'), '</strong></li></ul>' ."\n";
 		} else {
-
 			if (false !== strpos($output, "\'"))
 				$output = stripslashes($output);
 
@@ -180,17 +183,6 @@ class EC_Calendar
 		$options = get_option('optionsEventsCalendar');
 		$day_name_length = $options['daynamelength'];
 
-		// Option : Is the CSS adapted for your site ?
-		$adaptedCSS = $options['adaptedCSS'];
-
-		// If not we prepare the CSS style for today
-		$todayCSS = '';
-		if(!$adaptedCSS) {
-			$todayCSS = isset($options['todayCSS']) && !empty($options['todayCSS'])
-				? $options['todayCSS']
-				: 'border:thin solid blue;font-weight: bold;background-color: #a8c3d6;';
-		}
-		
 		$js = new EC_JS();
 		$first_day = get_option('start_of_week');
 		$first_of_month = gmmktime(0,0,0,$month,1,$year);
@@ -257,7 +249,7 @@ class EC_Calendar
 			// today
 			$theday = mktime(0,0,0,$month,$day,$year);
 			if ($theday == $today)
-				$dayID = $adaptedCSS ? ' id="today"' : ' id="todayWidget" style="' . $todayCSS . '"';
+				$dayID = ' id="todayWidget"';
 
 			// todo not sure we really need the span tag here... byte pollution?
 			$calendar .= '<td'.$dayID.'><span id="events-calendar-'.$day.'">'.$day.'</span></td>'."\n";
@@ -325,27 +317,17 @@ class EC_Calendar
     */
 	function displayLarge($year, $month, $before_large_calendar = "", $days = array(), $day_name_length = 7, $echo=true )
 	{
-		// Option : Is the CSS adapted for your site ?
-    	$options = get_option('optionsEventsCalendar');
-		$adaptedCSS = $options['adaptedCSS'];
-
-		// If not we prepare the CSS style for ToDay
-		$todayCSS = '';
-		if (!$adaptedCSS)
-			$todayCSS = isset($options['todayCSS']) && !empty($options['todayCSS']) ? $options['todayCSS'] : 'background-color:#9BA9CF; color:#FFF;';
-
 		$js = new EC_JS();
 		$first_day = get_option('start_of_week');
 		$first_of_month = gmmktime(0,0,0,$month,1,$year);
 		$day_names = array();
 
 		// January 4, 1970 was a Sunday
-		for($n=0,$t=(3+$first_day)*86400; $n<7; $n++,$t+=86400)
+		for ($n=0,$t=(3+$first_day)*86400; $n<7; $n++,$t+=86400)
 			$day_names[$n] = ucfirst($this->locale->get_weekday(gmdate('w',$t)));
 		
 		list($month, $year, $month_name, $weekday) = explode(',',gmstrftime('%m,%Y,%B,%w',$first_of_month));
 		$weekday = ($weekday + 7 - $first_day) % 7; //adjust for $first_day
-		//$title = ucfirst($this->locale->get_month($month)).'&nbsp;<span id="EC_ajaxLoader"></span>&nbsp;&nbsp;'.$year;
 		$titMonth = ucfirst($this->locale->get_month($month));
 
 		// trying the heredoc constuct... it works
@@ -389,16 +371,18 @@ EOHTML;
 		{
 			//if day_name_length is >3, the full name of the day will be printed
 			foreach ($day_names as $d)
+			{
 				$calendar .= '<th abbr="' . $d . '" scope="col" title="'.$d.'">'
-							. ($day_name_length < 4 ? $this->utf8_substr($d,0,$day_name_length) : $d)
+							. ($day_name_length < 4 ? $this->utf8_substr($d, 0, $day_name_length) : $d)
 							. '</th>' . "\n";
+			}
 		}
 		$calendar .= '</tr></thead>'."\n";
 
 		if ($weekday > 0)
-			$calendar .= '<tbody><tr>'."\n".'<td colspan="'.$weekday.'" class="pad">&nbsp;</td>'."\n";
+			$calendar .= '<tbody><tr>' . "\n" . '<td colspan="' . $weekday . '" class="pad">&nbsp;</td>' . "\n";
 		
-		for ($day=1, $days_in_month = gmdate('t',$first_of_month); $day <= $days_in_month; $day++, $weekday++)
+		for ($day=1, $days_in_month = gmdate('t', $first_of_month); $day <= $days_in_month; $day++, $weekday++)
 		{
 			if ($weekday == 7)
 			{
@@ -407,9 +391,9 @@ EOHTML;
 			}
 		
 			$dayID = '';
-			
-			if ("$month/$day/$year" == date('m/j/Y'))
-				$dayID = (!$adaptedCSS) ? ' id="todayLarge" style="'.$todayCSS.'" ' : ' id="todayLarge" ';
+
+			if ($month . '/' . $day . '/' . $year == date('m/j/Y'))
+				$dayID = ' id="todayLarge"';
 			
 			$calendar .= '<td' . $dayID . '>';
 			$calendar .= '<div class="dayHead">' . $day . '</div>';
@@ -418,10 +402,10 @@ EOHTML;
 		}
 		
 		if ($weekday != 7)
-			$calendar .= '<td colspan="'.(7-$weekday).'" class="pad">&nbsp;</td>'."\n"; //remaining "empty" days
+			$calendar .= '<td colspan="' . (7-$weekday) . '" class="pad">&nbsp;</td>' . "\n"; //remaining "empty" days
 		
-		$calendar .= "</tr></tbody></table>\n".'<script>'."\n";
-		$calendar .= ' jQuery.noConflict();'."\n".' (function($) {'."\n".' ecd.jq(document).ready(function() {'."\n";
+		$calendar .= "</tr></tbody></table>\n" . '<script>' . "\n";
+		$calendar .= ' jQuery.noConflict();' . "\n" . ' (function($) {' . "\n" . ' ecd.jq(document).ready(function() {' . "\n";
 
 		$returntext = $before_large_calendar . $calendar . $js->calendarDataLarge($month, $year, false) . ' });' . "\n" . ' })(jQuery);' . "\n" . '</script>' . "\n" . '</div>';
 		if ($echo === true)
@@ -444,23 +428,12 @@ EOHTML;
 	 */
 	function displayAdmin($year, $month, $days = array(), $day_name_length = 7)
 	{
-		// Option : Is the CSS adapted for your site ?
-		$options = get_option('optionsEventsCalendar');
-		$adaptedCSS = $options['adaptedCSS'];
-
-		// If not we prepare the CSS style for today
-		$todayCSS = '';
-		if (!$adaptedCSS)
-			$todayCSS = isset($options['todayCSS']) && !empty($options['todayCSS'])
-				? $options['todayCSS']
-				: 'background-color:#9BA9CF; color:#FFF;';
-
 		$first_day = get_option('start_of_week');
 		$first_of_month = gmmktime(0,0,0,$month,1,$year);
 		$day_names = array();
 
 		//January 4, 1970 was a Sunday
-		for($n=0,$t=(3+$first_day)*86400; $n<7; $n++,$t+=86400)
+		for ($n=0,$t=(3+$first_day)*86400; $n<7; $n++,$t+=86400)
 			$day_names[$n] = ucfirst($this->locale->get_weekday(gmdate('w',$t)));
 
 		list($month, $year, $month_name, $weekday) = explode(',',gmstrftime('%m,%Y,%B,%w',$first_of_month));
@@ -471,14 +444,17 @@ EOHTML;
 		
 		$calendar = '<div class="ec-wrap">'."\n";
 
-		$calendar .= '<h2 style="padding-right:0;text-align:center;"><a href="?page=events-calendar&amp;EC_action=switchMonthAdmin&amp;EC_month='.($month-1).'&amp;EC_year='.($year).'">&#171; '.$previousMonth.'</a> &mdash; '. __('Events','events-calendar') .' ('.$title.') &mdash; <a href="?page=events-calendar&amp;EC_action=switchMonthAdmin&amp;EC_month='.($month+1).'&amp;EC_year='.($year).'">'.$nextMonth.' &#187;</a></h2><hr>';
+		$calendar .= '<h2 style="padding-right:0;text-align:center;">';
+		$calendar .= '<a href="?page=events-calendar&amp;EC_action=switchMonthAdmin&amp;EC_month='.($month-1).'&amp;EC_year='.($year).'">&#171; '.$previousMonth.'</a> &mdash; '. __('Events','events-calendar') .' ('.$title.') &mdash; <a href="?page=events-calendar&amp;EC_action=switchMonthAdmin&amp;EC_month='.($month+1).'&amp;EC_year='.($year).'">'.$nextMonth.' &#187;</a>';
+		$calendar .= '</h2><hr>';
 		
 		$calendar .= '<table width="98%" summary="Admin Event Calendar" id="wp-calendar"><thead><tr>';
 
 		// if the day names should be shown ($day_name_length > 0)
-		if ($day_name_length) {
+		if ($day_name_length)
+		{
 			//if day_name_length is >3, the full name of the day will be printed
-			foreach($day_names as $d)
+			foreach ($day_names as $d)
 				$calendar .= '<th width="14%" abbr="'.$d.'" scope="col" title="'.$d.'">'.($day_name_length < 4 ? $this->utf8_substr($d,0,$day_name_length) : $d).'</th>';
 
 			$calendar .= '</tr></thead>';
@@ -488,24 +464,26 @@ EOHTML;
 		if ($weekday > 0)
 			$calendar .= '<td colspan="'.$weekday.'" class="pad">&nbsp;</td>';
 
-		for ($day=1,$days_in_month=gmdate('t',$first_of_month); $day<=$days_in_month; $day++,$weekday++) {
-			if ($weekday == 7) {
+		for ($day=1,$days_in_month=gmdate('t',$first_of_month); $day<=$days_in_month; $day++,$weekday++)
+		{
+			if ($weekday == 7)
+			{
 				$weekday = 0; //start a new week
 				$calendar .= '</tr><tr>';
 			}
 			$dayID = '';
 
 			if ("$month/$day/$year" == date('m/j/Y'))
-				$dayID = (!$adaptedCSS) ? ' id="todayAdmin" style="'.$todayCSS.'" ' : ' id="todayAdmin" ';
+				$dayID = ' id="todayAdmin" ';
 
-			$calendar .= '<td'.$dayID.'><div class="dayHead">'.$day.'</div><div id="events-calendar-'.$day.'"></div></td>';
+			$calendar .= '<td' . $dayID . '><div class="dayHead">' . $day . '</div><div id="events-calendar-' . $day . '"></div></td>';
 		}
 
 		// remaining "empty" days
 		if ($weekday != 7)
-			$calendar .= '<td colspan="'.(7-$weekday).'" class="pad">&nbsp;</td>';
+			$calendar .= '<td colspan="' . (7-$weekday) . '" class="pad">&nbsp;</td>';
 
-		echo $calendar.'</tr></tbody></table>'."\n";
+		echo $calendar.'</tr></tbody></table>' . "\n";
 	}
 }
 endif;

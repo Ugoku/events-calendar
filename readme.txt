@@ -36,7 +36,9 @@ The ability to add a large public calendar is available by posting a page and ad
 
 == Upgrade Notice ==
 = 7.0 =
-* First release by new contributor. Mostly code cleanup, no new features.
+* First release by new contributor. Mostly code cleanup, no new features but some bugs fixed.
+* This version breaks XHTML validation. If you are still using XHTML for your website, please consider switching to HTML5.
+* This version removes IE6 hacks so if you still care about a 12-year old browser (you shouldn't), don't use this plugin.
 
 = 6.7.13 =
 * This update fixes the issue with slashes in events.  This will work on new events, and will be corrected when editing events.  Backup before upgrading.

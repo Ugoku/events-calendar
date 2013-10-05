@@ -79,7 +79,7 @@ div#TB_title a, div#TB_title a:visited {
 	font-weight: bold;
 	z-index: 1000;
 }
-#todayLarge {
+#todayLarge, #todayAdmin {
 	background-color: #9BA9CF;
 	color: #FFF;
 }
@@ -218,4 +218,7 @@ div#TB_title a, div#TB_title a:visited {
 	background: url('../images/shadow2.png');
 	padding-top: 5em;
 	height: 100px;
+}
+#EC_management-post-status {
+	display: none;
 }
