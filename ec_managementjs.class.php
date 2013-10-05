@@ -81,19 +81,19 @@ class EC_ManagementJS
 				$endTime = isset ($e->eventEndTime) ? $e->eventEndTime : '';
 				$accessLevel = $e->accessLevel;
 				$PostID = isset ($e->postID) ? $e->postID : '';
-				$output .= '<p class="ec-mgmt-ttip">'._c('Title','events-calendar').": $title</p>";
-				$output .= '<p class="ec-mgmt-ttip">'._c('Location','events-calendar').": $location</p>";
-				$output .= '<p class="ec-mgmt-ttip">'._c('Description','events-calendar').": $description</p>";
-				$output .= '<p class="ec-mgmt-ttip">'._c('Start Date','events-calendar').": $startDate</p>";
-				$output .= '<p class="ec-mgmt-ttip">'._c('Start Time','events-calendar').": $startTime</p>";
-				$output .= '<p class="ec-mgmt-ttip">'._c('End Date','events-calendar').": $endDate</p>";
-				$output .= '<p class="ec-mgmt-ttip">'._c('End Time','events-calendar').": $endTime</p>";
-				$output .= '<p class="ec-mgmt-ttip">'._c('Visibility','events-calendar').": $accessLevel</p>";
+				$output .= '<p class="ec-mgmt-ttip">'._x('Title','events-calendar').": $title</p>";
+				$output .= '<p class="ec-mgmt-ttip">'._x('Location','events-calendar').": $location</p>";
+				$output .= '<p class="ec-mgmt-ttip">'._x('Description','events-calendar').": $description</p>";
+				$output .= '<p class="ec-mgmt-ttip">'._x('Start Date','events-calendar').": $startDate</p>";
+				$output .= '<p class="ec-mgmt-ttip">'._x('Start Time','events-calendar').": $startTime</p>";
+				$output .= '<p class="ec-mgmt-ttip">'._x('End Date','events-calendar').": $endDate</p>";
+				$output .= '<p class="ec-mgmt-ttip">'._x('End Time','events-calendar').": $endTime</p>";
+				$output .= '<p class="ec-mgmt-ttip">'._x('Visibility','events-calendar').": $accessLevel</p>";
 				$asslink = '';
 				if ($linkout !== '')
 				{
-					$output .= '<p class="ec-mgmt-ttip">'._c('Link out','events-calendar')." :".substr($linkout,0,19)."</p>";
-					$asslink = '<img id=\"events-calendar-link-' . $d . '-' . $e->id . '\" src=\"' . EVENTSCALENDARIMAGESURL . '/link.gif\" style=\"width:10px;height:10px;\" title=\"' . __("Associated link","events-calendar") . '\">&nbsp;';
+					$output .= '<p class="ec-mgmt-ttip">'._x('Link out','events-calendar')." :".substr($linkout,0,19)."</p>";
+					$asslink = '<img id=\"events-calendar-link-' . $d . '-' . $e->id . '\" src=\"' . EVENTSCALENDARIMAGESURL . '/link.png\" style=\"width:10px;height:10px;\" title=\"' . __("Associated link","events-calendar") . '\">&nbsp;';
 				}
 				$asspost = '';
 				if ($PostID !== '')
@@ -101,7 +101,7 @@ class EC_ManagementJS
 					$IDtmp = get_post($PostID);
 					$ptitle = $IDtmp->post_title;
 					// $ptitle = get_post($PostID)->post_title;
-					$output .= '<p class="ec-mgmt-ttip">'._c('Post','events-calendar')." ($PostID) : $ptitle.</p>";
+					$output .= '<p class="ec-mgmt-ttip">'._x('Post','events-calendar')." ($PostID) : $ptitle.</p>";
 					$asspost = '<img id=\"events-calendar-post-' . $d . '-' . $e->id . '\" src=\"' . EVENTSCALENDARIMAGESURL . '/post.gif\" style=\"width:10px;height:10px;\" title=\"' . __("Associated post","events-calendar") . '\">&nbsp;';
 				}
 
@@ -114,7 +114,7 @@ class EC_ManagementJS
 <script>
 //jQuery.noConflict();
 (function($) {
-	$('#events-calendar-<?php echo $d;?>').append("<div id=\"events-calendar-container-<?php echo $id;?>\"><?php echo $asslink, $asspost;?><span id=\"events-calendar-<?php echo $id;?>\"><?php echo $title;?>&nbsp;</span><img id=\"events-calendar-delete-<?php echo $id;?>\" src=\"<?php echo EVENTSCALENDARIMAGESURL;?>/delete.gif\" style=\"width:12px;height:12px;\" title=\"<?php _e('Delete','events-calendar');?>\"><\div>");
+	$('#events-calendar-<?php echo $d;?>').append("<div id=\"events-calendar-container-<?php echo $id;?>\"><?php echo $asslink, $asspost;?><span id=\"events-calendar-<?php echo $id;?>\"><?php echo $title;?>&nbsp;</span><img id=\"events-calendar-delete-<?php echo $id;?>\" src=\"<?php echo EVENTSCALENDARIMAGESURL;?>/delete.png\" style=\"width:12px;height:12px;\" title=\"<?php _e('Delete','events-calendar');?>\"><\div>");
 	$('#events-calendar-<?php echo $id;?>')
 		.attr('title', '<?php echo addslashes($output);?>')
 		.css('color', 'black')

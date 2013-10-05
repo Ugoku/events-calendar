@@ -98,7 +98,7 @@ class EC_Management
 			$this->year = $_GET['EC_action'] == 'switchMonthAdmin' ? $_GET['EC_year'] : date('Y');
 		}
 
-		$this->deflinkout = ''; //"http://";
+		$this->deflinkout = ''; // 'http://';
 		$this->calendar = new EC_Calendar();
 		$this->db = new EC_DB();
 	}
@@ -130,24 +130,24 @@ class EC_Management
 			$endTime = isset($_POST['EC_endTime']) && !empty($_POST['EC_endTime']) ? $_POST['EC_endTime'] : null;
 			$accessLevel = $_POST['EC_accessLevel'];
 
-			$output = "<strong>"._c('Title','events-calendar').": </strong>$title<br>";
+			$output = '<strong>' . _x('Title','events-calendar') . ": </strong>$title<br>";
 			
-			if(!empty($location) && !is_null($location))
-				$output .= "<strong>"._c('Location','events-calendar').": </strong>$location<br>";
-			if(!empty($linkout) && !is_null($linkout))
-				$output .= "<strong>"._c('Link out','events-calendar').": </strong><a href=\"".$linkout."\" target=\"_blank\">"._c('Click here','events-calendar')."</a><br>";
-			if(!empty($description) && !is_null($description))
-				$output .= "<strong>"._c('Description','events-calendar').": </strong>$description<br>";
-			if($startDate != $endDate )
-				$output .= "<strong>"._c('Start Date','events-calendar').": </strong>$startDate<br>";
-			if(!empty($startTime) || !is_null($startTime))
-				$output .= "<strong>"._c('Start Time','events-calendar').": </strong>$startTime<br>";
-			if($startDate != $endDate)
-				$output .= "<strong>"._c('End Date','events-calendar').": </strong>$endDate<br>";
-			if($startDate == $endDate)
-				$output .= "<strong>"._c('Date','events-calendar').": </strong>$startDate<br>";
-			if(!empty($endTime) && !empty($startTime) || !is_null($endTime) && !is_null($startTime))
-				$output .= "<strong>"._c('End Time','events-calendar').": </strong>$endTime<br>";
+			if (!empty($location) && !is_null($location))
+				$output .= '<strong>' . _x('Location','events-calendar').": </strong>$location<br>";
+			if (!empty($linkout) && !is_null($linkout))
+				$output .= '<strong>' . _x('Link out','events-calendar').": </strong><a href=\"".$linkout."\" target=\"_blank\">"._x('Click here','events-calendar')."</a><br>";
+			if (!empty($description) && !is_null($description))
+				$output .= '<strong>' . _x('Description','events-calendar').": </strong>$description<br>";
+			if ($startDate != $endDate )
+				$output .= '<strong>'._x('Start Date','events-calendar').": </strong>$startDate<br>";
+			if (!empty($startTime) || !is_null($startTime))
+				$output .= '<strong>'._x('Start Time','events-calendar').": </strong>$startTime<br>";
+			if ($startDate != $endDate)
+				$output .= '<strong>'._x('End Date','events-calendar').": </strong>$endDate<br>";
+			if ($startDate == $endDate)
+				$output .= '<strong>'._x('Date','events-calendar').": </strong>$startDate<br>";
+			if (!empty($endTime) && !empty($startTime) || !is_null($endTime) && !is_null($startTime))
+				$output .= '<strong>'._x('End Time','events-calendar').": </strong>$endTime<br>";
 			
 			$post_id = null;
 
@@ -171,14 +171,12 @@ class EC_Management
 				 	'post_status' => $statusPost,
 				 	'post_author' => $post_author,
 			  );
-			  $post_id = wp_insert_post($data);
-			  $results = $this->db->getLatestPost();
-			  $postID = $results[0]->id;
+				$postID = wp_insert_post($data);
 			}
 
 			$this->addEvent ($title, $location, $linkout, $description, $startDate, $startTime, $endDate, $endTime, $accessLevel, $postID);
 
-			$splitDate = split("-", $startDate);
+			$splitDate = explode ("-", $startDate);
 			$this->month = $splitDate[1];
 			$this->year = $splitDate[0];
 		}
@@ -211,7 +209,7 @@ class EC_Management
 			$accessLevel = $_POST['EC_accessLevel'];
 			$postID = isset($_POST['EC_postID']) && !empty($_POST['EC_postID']) ? $_POST['EC_postID'] : null;
 			$this->editEvent($id, $title, $location, $linkout, $description, $startDate, $startTime, $endDate, $endTime, $accessLevel, $postID);
-			$splitDate = split("-", $startDate);
+			$splitDate = explode ("-", $startDate);
 			$this->month = $splitDate[1];
 			$this->year = $splitDate[0];
 		}
@@ -281,11 +279,8 @@ class EC_Management
 	function addEventForm()
 	{
 ?>
-	<a name="addEventform"></a><h2><?php _e('Add Event','events-calendar'); ?></h2>
+	<h2 id="addEventform"><?php _e('Add Event','events-calendar'); ?></h2>
     <form name="EC_addEventForm" method="post" action="?page=events-calendar" onSubmit="return valid_addEventForm();" onClick='jQuery("#EC_alertmsg").fadeOut("slow");'>
-      <p class="submit">
-        <input type="submit" name="submit" value="<?php _e('Add Event','events-calendar'); ?> &raquo;">
-      </p>
     <div id="EC_alertmsg" class="alertmsg">
       <img id="EC_close_message_alert" src="<?php echo EVENTSCALENDARIMAGESURL."/cross.png";?>">
       <img id="ec-alert-img" src="<?php echo EVENTSCALENDARIMAGESURL."/alert.png";?>"> <strong><?php _e('Warning','events-calendar'); ?></strong>
@@ -551,9 +546,7 @@ class EC_Management
           document.forms.EC_editEventForm.EC_endTime.focus();
           return false;
         }
-        if (!postIDtst())
-					return false;
-        return true;
+				return postIDtst();
       }
 
       function postIDtst()
@@ -627,13 +620,13 @@ class EC_Management
           <?php printf(__("Calendar Type","events-calendar")) ?>:
           <select name="eventscalendar[type]" id="eventscalendar-type">
             <option value="calendar"><?php printf(__("Calendar","events-calendar")) ?></option>
-            <option value="list" <?php if ( isset($options['type']) && 'list' == $options['type'] ) echo 'selected="selected"'; ?>><?php printf(__("Event List","events-calendar")) ?></option>
+            <option value="list" <?php if ( isset($options['type']) && 'list' == $options['type'] ) echo 'selected="selected"'; ?>><?php printf(__("List","events-calendar")) ?></option>
           </select>
         </label>
       </p>
       <div id="eventscalendar-EventListOptions" style="<?php if ( !isset($options['type']) || 'list' != $options['type'] ) echo 'display: none;'; ?>">
         <p>
-          <span style="font-weight: bold"><?php printf(__("Event List options","events-calendar")) ?></span>
+          <span style="font-weight: bold"><?php printf(__("List options","events-calendar")) ?></span>
         </p>
         <p>
           <label for="eventscalendar-listCount">
@@ -678,7 +671,6 @@ class EC_Management
 			$options['daynamelength'] = '3';
 			$options['daynamelengthLarge'] = '3';
 			$options['jqueryextremstatus'] = 'false';
-			//$options['hidesponsor'] = 'false';
 		}
 		if (isset($_POST['optionsEventsCalendarSubmitted']) && $_POST['optionsEventsCalendarSubmitted']) {
 			//echo var_dump($_POST);
@@ -694,7 +686,6 @@ class EC_Management
 			$options['daynamelength'] = isset($_POST['daynamelength']) && !empty($_POST['daynamelength']) ? $_POST['daynamelength'] : '3';
 			$options['daynamelengthLarge'] = isset($_POST['daynamelengthLarge']) && !empty($_POST['daynamelengthLarge']) ? $_POST['daynamelengthLarge'] : '3';
 			$options['jqueryextremstatus'] = isset($_POST['jqxstatus']) ? $_POST['jqxstatus'] : 'false';
-			// $options['hidesponsor'] = isset($_POST['hidesponsor']) ? $_POST['hidesponsor'] : 'false';
 			$options['accessLevel'] = $_POST['EC_accessLevel'];
 
 			update_option('optionsEventsCalendar', $options);
@@ -777,10 +768,6 @@ class EC_Management
           <th width="33%" scope="row" valign="top" style="text-align:right;"><label for="jqxstatus"><?php _e('jQuery Extrem Protection (checked = yes)','events-calendar'); ?></label></th>
           <td width="67%"><input type="checkbox" <?php echo ($options['jqueryextremstatus']=="true") ? " checked" : "";?> name="jqxstatus" id="EC_jqxstatus" value="true"> <?php _e('(Check if you don\'t see the Tooltips)','events-calendar'); ?></td>
         </tr>
-				<?php /*<tr>
-          <th width="33%" scope="row" valign="top" style="text-align:right;"><label for="hidesponsor"><?php _e('Hide sponsor message?','events-calendar'); ?></label></th>
-          <td width="67%"><input type="checkbox" <?php echo ($options['hidesponsor']=="true") ? " checked" : "";?> name="hidesponsor" id="EC_hidesponsor" value="true"> <?php _e('(Hides the sponsor message.  Please don\'t, but if you do please donate.)','events-calendar'); ?></td>
-        </tr>*/?>
       </table>
       <input type="hidden" name="optionsEventsCalendarSubmitted" value="1">
       <p class="submit">
@@ -789,20 +776,18 @@ class EC_Management
     </form>
     <script>
       jQuery.noConflict();
-      jQuery("form[name='optionsEventsCalendar']").ready(function () {
-          if (jQuery("#EC_adaptedCSS").is(":checked")) {
-            jQuery("#switchCSSoptions").hide("slow");
-          } else {
-            jQuery("#switchCSSoptions").show("slow");
-          };
-      });
-      jQuery("#EC_adaptedCSS").click(function () {
-          if (jQuery("#EC_adaptedCSS").is(":checked")) {
-            jQuery("#switchCSSoptions").hide("slow");
-          } else {
-            jQuery("#switchCSSoptions").show("slow");
-          };
-      });
+
+			function switchCSSoptions()
+			{
+				if (jQuery("#EC_adaptedCSS").is(":checked")) {
+					jQuery("#switchCSSoptions").hide("slow");
+				} else {
+					jQuery("#switchCSSoptions").show("slow");
+				}
+			}
+
+      jQuery("form[name='optionsEventsCalendar']").ready(switchCSSoptions);
+      jQuery("#EC_adaptedCSS").click(switchCSSoptions);
       jQuery(document).ready(function() {
           jQuery("a[href='#addEventform']").hide();
       });

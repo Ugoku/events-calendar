@@ -142,13 +142,6 @@ function EventsCalendarINIT()
  * clockpicker,
  *
  * @uses EC_Management
- * FIXME Need to check if dimensions is still needed. I seem to remember that
- * 		it was incorprated into jQuery core a while ago...
- * 		Ok just went and checked. The plugin doesn't seem to be on brandon
- * 		page anymore (http://brandonaaron.net/code) but the dimension plugin
- * 		page still sends you there for docs. That would support the possibility
- * 		of its integration into core. I'll keep it here for a while but that
- * 		needs to be investigated. No sense loading an unneeded script!
  */
 function EventsCalendarManagementINIT()
 {
@@ -159,8 +152,8 @@ function EventsCalendarManagementINIT()
 	if(isset($_GET['page']) && strstr($_GET['page'], 'events-calendar'))
 	{
 		global $loc_lang;
-		wp_enqueue_script('jquerybgiframe', '/wp-content/plugins/events-calendar/js/jquery.bgiframe.js', array('jquery'), '2.1');
-		wp_enqueue_script('jquerydimensions', '/wp-content/plugins/events-calendar/js/jquery.dimensions.js', array('jquery'), '1.0b2');
+		//wp_enqueue_script('jquerybgiframe', '/wp-content/plugins/events-calendar/js/jquery.bgiframe.js', array('jquery'), '2.1');
+		//wp_enqueue_script('jquerydimensions', '/wp-content/plugins/events-calendar/js/jquery.dimensions.js', array('jquery'), '1.0b2');
 		wp_enqueue_script('jquerytooltip', '/wp-content/plugins/events-calendar/js/jquery.tooltip.min.js', array('jquery'), '1.3');
 		wp_enqueue_script('jqueryuicore', '/wp-content/plugins/events-calendar/js/ui.core.min.js', array('jquery'), '1.5.2');
 		wp_enqueue_script('jqueryuidatepicker', '/wp-content/plugins/events-calendar/js/ui.datepicker.js', array('jquery'), '1.5.2');

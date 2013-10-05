@@ -40,18 +40,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 --------------------------------------------------------------------------
 */
 if(!class_exists("EC_Calendar")) :
-require_once(EVENTSCALENDARCLASSPATH . '/ec_db.class.php');
-$ecoptions = get_option('optionsEventsCalendar');
-$ec_hide = $ecoptions['hidesponsor'] == 'true' ? 'display:none;' : '';
-$widget_sponsor_message = '';
-$large_sponsor_message = '';
+	require_once(EVENTSCALENDARCLASSPATH . '/ec_db.class.php');
+	$ecoptions = get_option('optionsEventsCalendar');
 /**
  * Displays the events list and the calendars
  *
  * @package WP-Events-Calendar
  * @since   6.0
  */
-class EC_Calendar {
+class EC_Calendar
+{
 
 	/**
 	 * Holds the WP_Locale object.
@@ -70,16 +68,6 @@ class EC_Calendar {
 		$this->locale = new WP_Locale;
 	}
 
-	/**
-	 * Prehistoric constructor.
-	 * This will live until we decide we don't support PHP4 anymore.
-	 * That should be soon!!
-	 *
-	 * @deprecated 	Upgrade to PHP5
-	 */
-	function EC_Calendar() {
-		$this->__construct();
-	}
 
 	/**
 	 * Returns a DB_CHARSET aware substring.
@@ -113,15 +101,9 @@ class EC_Calendar {
 	 *
 	 * @param int $num 			number of events to list
     */
-	function displayEventList($num) {
+	function displayEventList($num)
+	{
 		global $current_user;
-		global $widget_sponsor_message;
-
-		// Localisation
-		// not needed here anymore. moved to constructor.
-		//load_default_textdomain();
-		//require_once(ABSWPINCLUDE.'/locale.php');
-		//$wp_locale = new WP_Locale();
 
 		$db = new EC_DB();
 		$js = new EC_JS();
@@ -175,7 +157,6 @@ class EC_Calendar {
 				$output = stripslashes($output);
 
 			echo $output . "\n";
-			echo  $widget_sponsor_message;
 			$js->listData($events);
 		}
 	}
@@ -193,14 +174,8 @@ class EC_Calendar {
 	 *                            	day names won't be shown. If greater than 3,
 	 *                            	full name will be shown. Defaults to 2.
 	 */
-	function displayWidget($year, $month, $days = array(), $day_name_length = 2) {
-		global $widget_sponsor_message;
-		// Localisation
-		// not needed here anymore. moved to constructor.
-		//load_default_textdomain();
-		//require_once(ABSWPINCLUDE.'/locale.php');
-		//$wp_locale = new WP_Locale();
-
+	function displayWidget($year, $month, $days = array(), $day_name_length = 2)
+	{
 		// The following two lines are to get the length of day names - Ron
 		$options = get_option('optionsEventsCalendar');
 		$day_name_length = $options['daynamelength'];
@@ -326,19 +301,18 @@ class EC_Calendar {
 
 		// output the calendar
 		echo $calendar;
-		echo '<!-- WPEC script starts here -->'. "\n";
+		//echo '<!-- WPEC script starts here -->'. "\n";
 		echo $start_script;
 		$js->calendarData($month, $year);
 		echo $end_script . "\n";
-		echo '<!-- WPEC script ends here. -->'."\n";
-		echo  $widget_sponsor_message;
+		//echo '<!-- WPEC script ends here. -->'."\n";
 		echo '</div>' . "\n";
 	}
 
 	/**
 	 * Displays the Large Calendar.
 	 *
-	 * Displays the caledar then calls EC_JS::calendarDataLarge() to output the
+	 * Displays the caledar then calls EC_JS::s() to output the
 	 * data itself.
 	 *
 	 * @param int $year				year to display
@@ -349,14 +323,8 @@ class EC_Calendar {
 	 * @param int $day_name_length			day name length to display. if equal to zero,
 	 *						day names won't be shown. default to 7.
     */
-	function displayLarge($year, $month, $before_large_calendar = "", $days = array(), $day_name_length = 7, $echo=true ) {
-		global $large_sponsor_message;
-		// Localisation 
-		// not needed here anymore. moved to constructor.
-		//load_default_textdomain();
-		//require_once(ABSWPINCLUDE.'/locale.php');
-		//$wp_locale = new WP_Locale();
-
+	function displayLarge($year, $month, $before_large_calendar = "", $days = array(), $day_name_length = 7, $echo=true )
+	{
 		// Option : Is the CSS adapted for your site ?
     	$options = get_option('optionsEventsCalendar');
 		$adaptedCSS = $options['adaptedCSS'];
@@ -417,9 +385,10 @@ EOHTML;
 		$day_name_length = $options['daynamelengthLarge'];
 
 		//if the day names should be shown ($day_name_length > 0)
-		if ($day_name_length){
+		if ($day_name_length)
+		{
 			//if day_name_length is >3, the full name of the day will be printed
-			foreach($day_names as $d)
+			foreach ($day_names as $d)
 				$calendar .= '<th abbr="' . $d . '" scope="col" title="'.$d.'">'
 							. ($day_name_length < 4 ? $this->utf8_substr($d,0,$day_name_length) : $d)
 							. '</th>' . "\n";
@@ -429,8 +398,10 @@ EOHTML;
 		if ($weekday > 0)
 			$calendar .= '<tbody><tr>'."\n".'<td colspan="'.$weekday.'" class="pad">&nbsp;</td>'."\n";
 		
-		for ($day=1, $days_in_month = gmdate('t',$first_of_month); $day <= $days_in_month; $day++, $weekday++) {
-			if($weekday == 7){
+		for ($day=1, $days_in_month = gmdate('t',$first_of_month); $day <= $days_in_month; $day++, $weekday++)
+		{
+			if ($weekday == 7)
+			{
 				$weekday = 0; //start a new week
 				$calendar .= "</tr><tr>\n";
 			}
@@ -446,23 +417,19 @@ EOHTML;
 			$calendar .= '</td>'."\n";
 		}
 		
-		if($weekday != 7)
+		if ($weekday != 7)
 			$calendar .= '<td colspan="'.(7-$weekday).'" class="pad">&nbsp;</td>'."\n"; //remaining "empty" days
 		
 		$calendar .= "</tr></tbody></table>\n".'<script>'."\n";
 		$calendar .= ' jQuery.noConflict();'."\n".' (function($) {'."\n".' ecd.jq(document).ready(function() {'."\n";
-		
-		if($echo !== false){
-		
-			echo $before_large_calendar;
-			echo $calendar;
-			
-			echo $js->calendarDataLarge($month, $year);
 
-			echo ' });'."\n".' })(jQuery);'."\n".'</script>'."\n".$large_sponsor_message.'</div>';
-		
-		}else{
-			return $before_large_calendar . $calendar . $js->calendarDataLarge($month, $year, false) . ' });'."\n".' })(jQuery);'."\n".'//]]>'."\n".'</script>'."\n".$large_sponsor_message.'</div>';
+		$returntext = $before_large_calendar . $calendar . $js->calendarDataLarge($month, $year, false) . ' });' . "\n" . ' })(jQuery);' . "\n" . '</script>' . "\n" . '</div>';
+		if ($echo === true)
+		{
+			echo $returntext;
+			return true;
+		} else {
+			return $returntext;
 		}
 	}
 
@@ -475,14 +442,8 @@ EOHTML;
 	 * @param int $day_name_length		day name length to display. if equal to zero,
 	 *					day names won't be shown. default to 7.
 	 */
-	function displayAdmin($year, $month, $days = array(), $day_name_length = 7) {
-
-		// Localisation
-		// not needed here anymore. moved to constructor.
-		//load_default_textdomain();
-		//require_once(ABSWPINCLUDE.'/locale.php');
-		//$wp_locale = new WP_Locale();
-
+	function displayAdmin($year, $month, $days = array(), $day_name_length = 7)
+	{
 		// Option : Is the CSS adapted for your site ?
 		$options = get_option('optionsEventsCalendar');
 		$adaptedCSS = $options['adaptedCSS'];

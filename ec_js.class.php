@@ -267,7 +267,6 @@ class EC_JS {
 				delay: 0,
 				showURL: false,
 				opacity: 1,
-				fixPNG: true,
 				showBody: " - ",
 				// extraClass: "pretty fancy",
 				top: -15,
@@ -387,21 +386,21 @@ class EC_JS {
 					if (!empty($title) && !is_null($title))
 						$output .= '<div class="EC-tt-title"><span class="EC-tt-data EC-tt-title-data">'.$title.'</span></div>';
 					if (!empty($location) && !is_null($location))
-						$output .= '<div class="EC-tt-location"><span class="EC-tt-label EC-tt-location-label">'._c('Location','events-calendar').': </span><span class="EC-tt-data EC-tt-location-data">' . $location.'</span></div>';
+						$output .= '<div class="EC-tt-location"><span class="EC-tt-label EC-tt-location-label">'._x('Location','events-calendar').': </span><span class="EC-tt-data EC-tt-location-data">' . $location.'</span></div>';
 					if (!empty($description) && !is_null($description))
-						$output .= '<div class="EC-tt-description"><span class="EC-tt-label EC-tt-description-label">'._c('Description','events-calendar').': </span><span class="EC-tt-data EC-tt-description-data">'.$description.'</span></div>';
+						$output .= '<div class="EC-tt-description"><span class="EC-tt-label EC-tt-description-label">'._x('Description','events-calendar').': </span><span class="EC-tt-data EC-tt-description-data">'.$description.'</span></div>';
 					if ($startDate != $endDate) // && (!is_null($startDate) || !empty($startDate)) && (!is_null($endDate) || !empty($endDate)))
-						$output .= '<div class="EC-tt-startdate"><span class="EC-tt-label EC-tt-startdate-label">'._c('Start Date','events-calendar').': </span><span class="EC-tt-data EC-tt-startdate-data">'.$startDate.'</span></div>';
+						$output .= '<div class="EC-tt-startdate"><span class="EC-tt-label EC-tt-startdate-label">'._x('Start Date','events-calendar').': </span><span class="EC-tt-data EC-tt-startdate-data">'.$startDate.'</span></div>';
 					if (!empty($startTime) || !is_null($startTime))
-						$output .= '<div class="EC-tt-starttime"><span class="EC-tt-label EC-tt-starttime-label">'._c('Start Time','events-calendar').': </span><span class="EC-tt-data EC-tt-starttime-data">'.$startTime.'</span></div>';
+						$output .= '<div class="EC-tt-starttime"><span class="EC-tt-label EC-tt-starttime-label">'._x('Start Time','events-calendar').': </span><span class="EC-tt-data EC-tt-starttime-data">'.$startTime.'</span></div>';
 					if ($startDate != $endDate) // && (!is_null($endDate) || !empty($endDate)))
-						$output .= '<div class="EC-tt-enddate"><span class="EC-tt-label EC-tt-enddate-label">'._c('End Date','events-calendar').': </span><span class="EC-tt-data EC-tt-enddate-data">'.$endDate.'</span></div>';
+						$output .= '<div class="EC-tt-enddate"><span class="EC-tt-label EC-tt-enddate-label">'._x('End Date','events-calendar').': </span><span class="EC-tt-data EC-tt-enddate-data">'.$endDate.'</span></div>';
 					if (!empty($endTime) && !empty($startTime) || !is_null($endTime) && !is_null($startTime))
-						$output .= '<div class="EC-tt-endtime"><span class="EC-tt-label EC-tt-endtime-label">'._c('End Time','events-calendar').': </span><span class="EC-tt-data EC-tt-endtime-data">'.$endTime.'</span></div>';
+						$output .= '<div class="EC-tt-endtime"><span class="EC-tt-label EC-tt-endtime-label">'._x('End Time','events-calendar').': </span><span class="EC-tt-data EC-tt-endtime-data">'.$endTime.'</span></div>';
 					//
 					// Link outside the site if the link exist : priority on the PostID link
 					if ($linkout != '') {
-						$output .= '<div class="EC-tt-linkout"><span class="EC-tt-label EC-tt-linkout-label">'._c('Link out','events-calendar').': </span><span class="EC-tt-data EC-tt-linkout-data">'.substr($linkout,0,19).'</span></div>';
+						$output .= '<div class="EC-tt-linkout"><span class="EC-tt-label EC-tt-linkout-label">'._x('Link out','events-calendar').': </span><span class="EC-tt-data EC-tt-linkout-data">'.substr($linkout,0,19).'</span></div>';
 						$titlinked = '<a class="EC-tt-title-link EC-tt-user-link" href="' . $linkout. '" target="_blank">'.$title.'</a>';
 					} elseif ($PostID != '') { // Link to a post when exist
 						$titlinked = '<a class="EC-tt-title-link EC-tt-post-link" href="' . get_permalink($PostID) . '">'.$title.'</a>';
@@ -454,7 +453,6 @@ class EC_JS {
 									delay: 0,
 									showURL: false,
 									opacity: 1,
-									fixPNG: true,
 									showBody: " - ",
 									extraClass: "'.$EC_tt_special.'",
 									top: -15,
@@ -513,9 +511,11 @@ class EC_JS {
 		';
 				
 				
-		if($echo !== false){ 
-			echo $the_js; 
-		}else{ 
+		if ($echo !== false)
+		{
+			echo $the_js;
+			return true;
+		} else {
 			return $the_js; 
 		}
 	} // end of calendarDataLarge
@@ -552,9 +552,9 @@ class EC_JS {
 			  $ec_starthour = $ec_startminute = $ec_startsecond = 0;
 		  }
         $startDate = date($options['dateFormatLarge'], mktime($ec_starthour, $ec_startminute, $ec_startsecond, $ec_startmonth, $ec_startday, $ec_startyear));
-        list($ec_endyear, $ec_endmonth, $ec_endday) = split("-", $e->eventEndDate);
+        list($ec_endyear, $ec_endmonth, $ec_endday) = explode ("-", $e->eventEndDate);
         if($e->eventEndTime != null && !empty($e->eventEndTime)) {
-          list($ec_endhour, $ec_endminute, $ec_endsecond) = split(":", $e->eventEndTime);
+          list($ec_endhour, $ec_endminute, $ec_endsecond) = explode (":", $e->eventEndTime);
           $endTime = date($options['timeFormatLarge'], mktime($ec_endhour, $ec_endminute, $ec_endsecond, $ec_endmonth, $ec_endday, $ec_endyear));
 		  }
 		  else {
@@ -564,19 +564,19 @@ class EC_JS {
 
         $endDate = date($options['dateFormatLarge'], mktime($ec_endhour, $ec_endminute, $ec_endsecond, $ec_endmonth, $ec_endday, $ec_endyear));
       $accessLevel = $e->accessLevel;
-      $output .= "<strong>"._c('Title','events-calendar').": </strong>$title<br>";
+      $output .= "<strong>"._x('Title','events-calendar').": </strong>$title<br>";
       if(!empty($location) && !is_null($location))
-        $output .= "<strong>"._c('Location','events-calendar').": </strong>$location<br>";
+        $output .= "<strong>"._x('Location','events-calendar').": </strong>$location<br>";
       if(!empty($description) && !is_null($description))
-        $output .= "<strong>"._c('Description','events-calendar').": </strong>$description<br>";
+        $output .= "<strong>"._x('Description','events-calendar').": </strong>$description<br>";
       if($startDate != $endDate )
-        $output .= "<strong>"._c('Start Date','events-calendar').": </strong>$startDate<br>";
+        $output .= "<strong>"._x('Start Date','events-calendar').": </strong>$startDate<br>";
       if(!empty($startTime) || !is_null($startTime))
-        $output .= "<strong>"._c('Start Time','events-calendar').": </strong>$startTime<br>";
+        $output .= "<strong>"._x('Start Time','events-calendar').": </strong>$startTime<br>";
       if($startDate != $endDate)
-        $output .= "<strong>"._c('End Date','events-calendar').": </strong>$endDate<br>";
+        $output .= "<strong>"._x('End Date','events-calendar').": </strong>$endDate<br>";
       if(!empty($endTime) && !empty($startTime) || !is_null($endTime) && !is_null($startTime))
-        $output .= "<strong>"._c('End Time','events-calendar').": </strong>$endTime<br>";
+        $output .= "<strong>"._x('End Time','events-calendar').": </strong>$endTime<br>";
     }
     if($output != ''):
 		 if (preg_match("/\'/", $output))

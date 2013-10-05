@@ -290,50 +290,18 @@ class EC_DB {
 	function editEvent($id, $title, $location, $linkout, $description, $startDate, $startTime, $endDate, $endTime, $accessLevel, $postID) {
 		global $wpdb;
 		// just to make sure
-		if (empty($id))
+		if (empty ($id))
 			return;
-/*
-		// todo get rid of the quotes here. don't need them anymore
-		// since we are using wpdb->prepare()
-		$postID = is_null($postID) ? "NULL" : "'$postID'";
-		//$title = is_null($postID) ? "NULL" : "'$title'";
-		$location = is_null($location) ? "NULL" : "'$location'";
-		$description = is_null($description) ? "NULL" : "'$description'";
-		$startDate = is_null($startDate) ? "NULL" : "'$startDate'";
-		$endDate = is_null($endDate) ? "NULL" : "'$endDate'";
-		$linkout = is_null($linkout) ? "NULL" : "'$linkout'";
-		$startTime = is_null($startTime) ? "NULL" : "'$startTime'";
-		$accessLevel = is_null($accessLevel) ? "NULL" : "'$accessLevel'";
-		$endTime = is_null($endTime) ? "NULL" : "'$endTime'";
-*/
-		/*
-		$sql = "UPDATE `$this->mainTable` SET "
-			."`eventTitle` = '$title', "
-			."`eventDescription` = $description, "
-			."`eventLocation` = $location, "
-			."`eventLinkout` = $linkout, "
-			."`eventStartDate` = $startDate, "
-			."`eventStartTime` = $startTime, "
-			."`eventEndDate` = $endDate, "
-			."`eventEndTime` = $endTime, "
-			."`postID` = $postID, "
-			."`accessLevel` = $accessLevel"
-			." WHERE `id` = $id LIMIT 1;";
 
-		$this->db->query($sql);
-		*/
-		
-		// Fix for sql injection possibility by @zap1989
-		
-		$postID = is_null($postID) ? null : "$postID";
-		$location = is_null($location) ? null : "$location";
-		$description = is_null($description) ? null : "$description";
-		$startDate = is_null($startDate) ? null : "$startDate";
-		$endDate = is_null($endDate) ? null : "$endDate";
-		$linkout = is_null($linkout) ? null : "$linkout";
-		$startTime = is_null($startTime) ? null : "$startTime";
-		$accessLevel = is_null($accessLevel) ? null : "$accessLevel";
-		$endTime = is_null($endTime) ? null : "$endTime";
+		$postID = is_null($postID) ? null : $postID;
+		$location = is_null($location) ? null : $location;
+		$description = is_null($description) ? null : $description;
+		$startDate = is_null($startDate) ? null : $startDate;
+		$endDate = is_null($endDate) ? null : $endDate;
+		$linkout = is_null($linkout) ? null : $linkout;
+		$startTime = is_null($startTime) ? null : $startTime;
+		$accessLevel = is_null($accessLevel) ? null : $accessLevel;
+		$endTime = is_null($endTime) ? null : $endTime;
 		
 		$wpdb->update(
 			$this->mainTable,
@@ -388,7 +356,8 @@ class EC_DB {
 	 * @param int $id
 	 * @return array
 	 */
-	function getEvent($id) {
+	function getEvent($id)
+	{
 		$sql = "SELECT * FROM `$this->mainTable` WHERE `id` = $id LIMIT 1;";
 		return $this->db->get_results($sql);
 	}
@@ -398,25 +367,14 @@ class EC_DB {
 	 * @param int $num 		number of events to retrieve
 	 * @return array
 	 */
-	function getUpcomingEvents($num = 5) {
+	function getUpcomingEvents($num = 5)
+	{
 		$dt = date('Y-m-d');
 		$sql = "SELECT *"
 			. "  FROM `$this->mainTable`"
 			. " WHERE `eventStartDate` >= '$dt'"
 			. "    OR `eventEndDate` >= '$dt'"
 			. " ORDER BY eventStartDate, eventStartTime LIMIT $num";
-		return $this->db->get_results($sql);
-	}
-
-	/**
-	 * Returns the latest post id.
-	 *
-	 * @todo Why should we call this. Latest post could be anything!!!
-	 *
-	 * @return array
-	 */
-	function getLatestPost() {
-		$sql = "SELECT `id` FROM `$this->postsTable` ORDER BY `id` DESC LIMIT 1;";
 		return $this->db->get_results($sql);
 	}
 }

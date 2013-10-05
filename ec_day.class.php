@@ -109,26 +109,26 @@ class EC_Day {
         // Title
         $output = '<p>'."\n".'<div for="EC_title" class="EC_title"><strong>&nbsp;'.$title.'</strong></div>'."\n";
         // If Location
-        if(!empty($location) && !is_null($location)) $output .= '<div for="EC_location" class="EC_location"><strong>&nbsp;'._c('Location','events-calendar').':</strong> '.$location.'</div>'."\n";
+        if(!empty($location) && !is_null($location)) $output .= '<div for="EC_location" class="EC_location"><strong>&nbsp;'._x('Location','events-calendar').':</strong> '.$location.'</div>'."\n";
         // start time
         if(!empty($startTime) && !is_null($startTime))
           $output .='<div for="EC_time" class="EC_time"><strong>&nbsp;'.$startTime.'</strong>&nbsp;';
         // end Time
         if((!empty($endTime) && !empty($startTime)) || (!is_null($endTime) && !is_null($startTime)))
-          $output .= _c('to','events-calendar').'<strong>&nbsp;'.$endTime.'</strong>';
+          $output .= _x('to','events-calendar').'<strong>&nbsp;'.$endTime.'</strong>';
         // Description
         $output .= '</div><div for="EC_description" class="EC_description">&nbsp;'.$description.'</div>'."\n";
         // If Star Date <> End Date
         if($event->eventStartDate != $event->eventEndDate )
-          $output .= '<div for="EC_date" class="EC_date"><strong>'._c('Date range','events-calendar').'</strong></div>'._c('Since','events-calendar').'&nbsp;'.$startDate.'&nbsp;'._c('until','events-calendar').'&nbsp;'.$endDate."\n";
+          $output .= '<div for="EC_date" class="EC_date"><strong>'._x('Date range','events-calendar').'</strong></div>'._x('Since','events-calendar').'&nbsp;'.$startDate.'&nbsp;'._x('until','events-calendar').'&nbsp;'.$endDate."\n";
         // Link outside the site if the link exist
         if ($linkout != '')
-          $output .= '<div for="EC_linkout" class="EC_linkout_and_postid"><strong>'._c('Link out','events-calendar').'</strong></div><a href="'.$linkout.'" target="_parent">'.substr($linkout,0,37).'</a>';
+          $output .= '<div for="EC_linkout" class="EC_linkout_and_postid"><strong>'._x('Link out','events-calendar').'</strong></div><a href="'.$linkout.'" target="_parent">'.substr($linkout,0,37).'</a>';
         // Link to a post when exist
         if ($PostID != '') {
           $IDtmp = get_post($PostID);
           $ptitle = $IDtmp->post_title;
-          $output .= '<div for="EC_postid" class="EC_linkout_and_postid"><strong>'._c('Post','events-calendar').' ('.$PostID.')</strong></div><a href="'.get_permalink($PostID).'" target="_parent"/>'.stripslashes($ptitle).'</a><br>';
+          $output .= '<div for="EC_postid" class="EC_linkout_and_postid"><strong>'._x('Post','events-calendar').' ('.$PostID.')</strong></div><a href="'.get_permalink($PostID).'" target="_parent"/>'.stripslashes($ptitle).'</a><br>';
         }
         echo $output;
       } // if
