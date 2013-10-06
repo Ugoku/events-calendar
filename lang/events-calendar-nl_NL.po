@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Events Calendar\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-10-05 15:29+0100\n"
-"PO-Revision-Date: 2013-10-05 15:29+0100\n"
+"PO-Revision-Date: 2013-10-06 12:00+0100\n"
 "Last-Translator: Sander de Jong <sander@zanderz.net>\n"
 "Language-Team: Ugoku <wordpress@ugoku.nl>\n"
 "MIME-Version: 1.0\n"
@@ -159,7 +159,7 @@ msgstr "Nieuw evenement"
 #: ..\./ec_management.class.php:286
 #: ..\./ec_management.class.php:451
 msgid "Warning"
-msgstr ""
+msgstr "Waarschuwing"
 
 #: ..\./ec_management.class.php:307
 #: ..\./ec_management.class.php:472
@@ -184,24 +184,24 @@ msgstr ""
 #: ..\./ec_management.class.php:323
 #: ..\./ec_management.class.php:488
 msgid "Visibility Level"
-msgstr ""
+msgstr "Zichtbaarheid"
 
 #: ..\./ec_management.class.php:326
 #: ..\./ec_management.class.php:491
 msgid "Public"
-msgstr ""
+msgstr "Openbaar"
 
 #: ..\./ec_management.class.php:327
 #: ..\./ec_management.class.php:492
 #: ..\./ec_management.class.php:704
 msgid "Administrator"
-msgstr ""
+msgstr "Beheerder"
 
 #: ..\./ec_management.class.php:328
 #: ..\./ec_management.class.php:493
 #: ..\./ec_management.class.php:705
 msgid "Editor"
-msgstr ""
+msgstr "Redacteur"
 
 #: ..\./ec_management.class.php:329
 #: ..\./ec_management.class.php:494
@@ -219,7 +219,7 @@ msgstr ""
 #: ..\./ec_management.class.php:496
 #: ..\./ec_management.class.php:708
 msgid "Subscriber"
-msgstr ""
+msgstr "Abonnee"
 
 #: ..\./ec_management.class.php:336
 msgid "Create Post for Event"
@@ -227,11 +227,11 @@ msgstr "Maak bericht voor evenement"
 
 #: ..\./ec_management.class.php:343
 msgid "Which Post Status ?"
-msgstr ""
+msgstr "Berichtstatus"
 
 #: ..\./ec_management.class.php:346
 msgid "Draft"
-msgstr ""
+msgstr "Concept"
 
 #: ..\./ec_management.class.php:347
 msgid "Publish"
@@ -254,12 +254,12 @@ msgstr ""
 
 #: ..\./ec_management.class.php:444
 msgid "Edit Event"
-msgstr ""
+msgstr "Evenement bewerken"
 
 #: ..\./ec_management.class.php:447
 #: ..\./ec_management.class.php:508
 msgid "Update Event"
-msgstr ""
+msgstr "Evenement bijwerken"
 
 #: ..\./ec_management.class.php:501
 msgid "Post ID"
@@ -289,7 +289,7 @@ msgstr "Lijstopties"
 
 #: ..\./ec_management.class.php:633
 msgid "Number of events"
-msgstr ""
+msgstr "Aantal evenementen"
 
 #: ..\./ec_management.class.php:694
 #: ..\./events-calendar.php:169
