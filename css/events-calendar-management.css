@@ -70,3 +70,10 @@
 	top: -170px;
 */
 }
+.link_delete {
+	color: red;
+	cursor: pointer;
+}
+.link_delete:hover {
+	color: #800;
+}

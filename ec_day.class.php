@@ -133,7 +133,7 @@ class EC_Day
         // Link outside the site if the link exist
 				$linkout = isset($event->eventLinkout) ? $event->eventLinkout : '';
         if ($linkout != '')
-          $output .= '<div for="EC_linkout" class="EC_linkout_and_postid"><strong>'._x('Link out','events-calendar').'</strong></div><a href="'.$linkout.'" target="_parent">'.substr($linkout,0,37).'</a>';
+          $output .= '<div for="EC_linkout" class="EC_linkout_and_postid"><strong>'._x('Link out','events-calendar').'</strong></div><a href="'.$linkout.'" target="_parent">' . $linkout . '</a>';
 
         // Link to a post when exist
 				$PostID = isset($event->postID) ? $event->postID : '';

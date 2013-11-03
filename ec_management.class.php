@@ -481,8 +481,8 @@ class EC_Management
           </td>
         </tr>
         <tr>
-          <th scope="row"><label for="EC_postID"><?php _e('Post ID','events-calendar'); ?></label></th>
-          <td><input class="ec-edit-form-text" autocomplete="OFF" type="text" size="10" name="EC_postID" id="EC_postID" value="<?php echo $event->postID;?>" onChange="postIDtst()"/></td>
+          <th scope="row"><label for="EC_postID"><?php _e('Post ID of Associated post (0 for no associated post)','events-calendar'); ?></label></th>
+          <td><input class="ec-edit-form-text" autocomplete="OFF" type="number" min=0 name="EC_postID" id="EC_postID" value="<?php echo $event->postID;?>" onChange="postIDtst()"/></td>
         </tr>
       </table>
       <input type="hidden" name="EC_editEventFormSubmitted" value="1">
@@ -656,7 +656,6 @@ class EC_Management
 				'timeFormatLarge' => 'h:i a',
 				'adaptedCSS' => '',
 				'disableTooltips' => '',
-				'todayCSS' => 'border:thin solid blue;font-weight: bold;',
 				'dayHasEventCSS' => 'color:red',
 				'timeStep' => '30',
 				'daynamelength' => '3',
@@ -672,7 +671,6 @@ class EC_Management
 			$options['timeFormatLarge'] = isset($_POST['timeFormatLarge']) && !empty($_POST['timeFormatLarge']) ? $_POST['timeFormatLarge'] : 'g:i a';
 			$options['timeStep'] = isset($_POST['timeStep']) && !empty($_POST['timeStep']) ? $_POST['timeStep'] : '30';
 			$options['adaptedCSS'] = isset($_POST['adaptedCSS']) ? $_POST['adaptedCSS'] : '';
-			$options['todayCSS'] = isset($_POST['todayCSS']) && !empty($_POST['todayCSS']) ? $_POST['todayCSS'] : 'border:thin solid blue;font-weight: bold;';
 			$options['disableTooltips'] = isset($_POST['disableTooltips']) ? $_POST['disableTooltips'] : '';
 			$options['dayHasEventCSS'] = isset($_POST['dayHasEventCSS']) && !empty($_POST['dayHasEventCSS']) ? $_POST['dayHasEventCSS'] : 'color:red;';
 			$options['daynamelength'] = isset($_POST['daynamelength']) && !empty($_POST['daynamelength']) ? $_POST['daynamelength'] : '3';
@@ -737,10 +735,6 @@ class EC_Management
         </tr>
         </table>
         <table id="switchCSSoptions" summary="Edit Form3" class="form-table" width="100%" cellspacing="2" cellpadding="5">
-        <tr>
-          <th width="33%" scope="row" valign="top" style="text-align:right;" id="EC_todayCSS"><label for="todayCSS"><?php _e('CSS for Today Date','events-calendar'); ?></label></th>
-          <td width="67%"><input type="text" name="todayCSS" id="EC_todayCSS" value="<?php echo $options['todayCSS'];?>"></td>
-        </tr>
         <tr>
           <th width="33%" scope="row" valign="top" style="text-align:right;" id="EC_dayHasEventCSS_label"><label for="dayHasEventCSS"><?php _e('CSS for Day With Events','events-calendar'); ?></label></th>
           <td width="67%"><input type="text" name="dayHasEventCSS" id="EC_dayHasEventCSS" value="<?php echo $options['dayHasEventCSS'];?>"></td>

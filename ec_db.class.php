@@ -196,7 +196,6 @@ class EC_DB
 		if (!isset($options['timeStep'])) $options['timeStep'] = '30';
 		if (!isset($options['adaptedCSS'])) $options['adaptedCSS'] = ''; //TODO: remove this option
 		if (!isset($options['jqueryextremstatus'])) $options['jqueryextremstatus'] = 'false';
-		if (!isset($options['todayCSS'])) $options['todayCSS'] = 'border:thin solid blue;font-weight: bold;'; //TODO: remove this option
 		if (!isset($options['dayHasEventCSS'])) $options['dayHasEventCSS'] = 'color:red;'; //TODO: remove this option
 		if (!isset($options['daynamelength'])) $options['daynamelength'] = '3';
 		if (!isset($options['daynamelengthLarge'])) $options['daynamelengthLarge'] = '3';

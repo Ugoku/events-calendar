@@ -70,7 +70,7 @@ class EC_ManagementJS
 			foreach ($this->db->getDaysEvents($sqldate) as $e)
 			{
 				$output = '';
-				$id = "$d-$e->id";
+				$id = $d . '-' . $e->id;
 				$title = $e->eventTitle;
 				$description = preg_replace('#\r?\n#', '<br>', $e->eventDescription);
 				$location = isset ($e->eventLocation) ? $e->eventLocation : '';
@@ -92,20 +92,18 @@ class EC_ManagementJS
 				$asslink = '';
 				if ($linkout !== '')
 				{
-					$output .= '<p class="ec-mgmt-ttip">'._x('Link out','events-calendar')." :".substr($linkout,0,19)."</p>";
+					$output .= '<p class="ec-mgmt-ttip">' . _x('Link out','events-calendar') . " :" . $linkout . '</p>';
 					$asslink = '<img id=\"events-calendar-link-' . $d . '-' . $e->id . '\" src=\"' . EVENTSCALENDARIMAGESURL . '/link.png\" style=\"width:10px;height:10px;\" title=\"' . __("Associated link","events-calendar") . '\">&nbsp;';
 				}
 				$asspost = '';
-				if ($PostID !== '')
+				if ($PostID > 0)
 				{
-					$IDtmp = get_post($PostID);
-					$ptitle = $IDtmp->post_title;
-					//TODO: Check if $ptitle = get_the_title ($PostID); works
+					$ptitle = get_the_title ($PostID);
 					$output .= '<p class="ec-mgmt-ttip">'._x('Post','events-calendar')." ($PostID) : $ptitle.</p>";
 					$asspost = '<img id=\"events-calendar-post-' . $d . '-' . $e->id . '\" src=\"' . EVENTSCALENDARIMAGESURL . '/post.gif\" style=\"width:10px;height:10px;\" title=\"' . __("Associated post","events-calendar") . '\">&nbsp;';
 				}
 
-				if ($output != '')
+				if ($output !== '')
 				{
 					// make sure we don't double escape
 					if (preg_match("/\'|\"/", $output))
@@ -114,14 +112,9 @@ class EC_ManagementJS
 <script>
 
 (function($) {
-	$('#events-calendar-<?php echo $d;?>').append("<div id=\"events-calendar-container-<?php echo $id;?>\"><?php echo $asslink, $asspost;?><span id=\"events-calendar-<?php echo $id;?>\"><?php echo $title;?>&nbsp;</span><img id=\"events-calendar-delete-<?php echo $id;?>\" src=\"<?php echo EVENTSCALENDARIMAGESURL;?>/delete.png\" style=\"width:12px;height:12px;\" title=\"<?php _e('Delete','events-calendar');?>\"><\div>");
+	$('#events-calendar-<?php echo $d;?>').append("<div id=\"events-calendar-container-<?php echo $id;?>\"><?php echo $asslink, $asspost;?><span id=\"events-calendar-<?php echo $id;?>\"><?php echo $title;?>&nbsp;</span><span class=\"link_delete\" id=\"events-calendar-delete-<?php echo $id;?>\" title=\"<?php _e('Delete','events-calendar');?>\">&#x2717;</span><\div>");
 	$('#events-calendar-<?php echo $id;?>')
 		.attr('title', '<?php echo addslashes($output);?>')
-		.css('color', 'black')
-		.css('font-size', '0.9em')
-		.mouseover(function() {
-			$(this).css('cursor', 'pointer');
-		})
 		.click(function() {
 			top.location = "?page=events-calendar&EC_action=edit&EC_id=<?php echo $e->id;?>";
 		})

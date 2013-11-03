@@ -140,7 +140,6 @@ class EC_JS
 			// each day can have multiple events. So loop through them.
 			foreach ($this->db->getDaysEvents($sqldate) as $e)
 			{
-
 				if (($e->accessLevel == 'public') || (current_user_can($e->accessLevel)))
 				{
 					// $description = $e->eventDescription;
@@ -187,7 +186,9 @@ class EC_JS
 			{
 				$output .= '<span class="EC-tt-widget-clickdate">' . __('Click date for more details','events-calendar') . '</span>';
 
-				//TODO: what the hell does this code do?
+				// The code below explodes the large date format into individual components.
+				// It explodes by <space> first, then <dash>, then <slash>, then <backslash>, then <comma>, then <period>.
+				//TODO: find a better way to do this
 				$format = $options['dateFormatLarge'];
 				$elemnts_date = explode(' ', $format);
 
@@ -205,8 +206,7 @@ class EC_JS
 
 				if ($format == $elemnts_date[0])
 					$elemnts_date = explode('.', $format);
-				// END TODO
-        
+
 				if (($format == $elemnts_date[0]) || ($elemnts_date[2] == null ))
 				{
 					echo '<script>alert("'
@@ -231,7 +231,7 @@ class EC_JS
 					if (substr_count('0Yy', $elem_dt))
 						$date_show .= $year;
 				}
- 
+
 				// making the textbox as large as necessary
 				$len_desc = strlen($e->eventDescription);
 				if ($len_desc < 100)
@@ -399,7 +399,7 @@ class EC_JS
 					$eventHasLink = false;
 					if ($linkout !== '' && $linkout !== 'http://')
 					{
-						$output .= '<div class="EC-tt-linkout"><span class="EC-tt-label EC-tt-linkout-label">'._x('Link out','events-calendar').': </span><span class="EC-tt-data EC-tt-linkout-data">'.substr($linkout,0,19).'</span></div>';
+						$output .= '<div class="EC-tt-linkout"><span class="EC-tt-label EC-tt-linkout-label">' . _x('Link out','events-calendar') . ': </span><span class="EC-tt-data EC-tt-linkout-data">' . $linkout . '</span></div>';
 						$titlinked = '<a class="EC-tt-title-link EC-tt-user-link" href="' . $linkout. '" target="_blank">'.$title.'</a>';
 						$eventHasLink = true;
 					} elseif ((int) $PostID > 0) { // Link to a post when exist

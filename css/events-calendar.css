@@ -53,6 +53,9 @@ div#TB_title a, div#TB_title a:visited {
 	padding: 0;
 	margin: 0;
 }
+#calendar_wrapLarge h2 {
+	text-align:center;
+}
 #wp-calendarLarge td {
 	border: thin solid black;
 	width: 150px;
@@ -104,6 +107,7 @@ div#TB_title a, div#TB_title a:visited {
 }
 #EC_current-month {
 	position: relative;
+	text-align: center;
 }
 #EC_ajaxLoader {
 	display: none;
@@ -221,4 +225,11 @@ div#TB_title a, div#TB_title a:visited {
 }
 #EC_management-post-status {
 	display: none;
+}
+
+#CalendarLarge-Header {
+	border: 0;
+	border-collapse: collapse;
+	border-spacing: 0;
+	width: 100%;
 }

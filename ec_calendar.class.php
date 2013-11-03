@@ -229,9 +229,7 @@ class EC_Calendar
 		// time to build the calendar itself
 		$calendar .= '<tbody><tr>' ."\n";
 
-		// initial empty days
-		// todo this does a colpan. But me think we could just loop through
-		// the days and output their cells. would look nicer... just my 2�.
+		// Initial empty days
 		if ($weekday > 0)
 			$calendar .= '<td colspan="'.$weekday.'" class="padday">&nbsp;</td>' . "\n";
 		
@@ -269,7 +267,7 @@ class EC_Calendar
 		// FIXME
 		// This needs to be called immediately after jQuery has been loaded
 		// and before it is used anywhere, meaning not just for our plugin.
-		// Also, if extremme protection has been selected by the user,
+		// Also, if extreme protection has been selected by the user,
 		// jQuery won't even exists!!
 		// there are a lot of noConflict calls. 
 		//$start_script .= 'jQuery.noConflict();'."\n";
@@ -349,11 +347,11 @@ class EC_Calendar
 		$ajax_loader = EVENTSCALENDARIMAGESURL . '/ajax-loader.gif';
 		$calendar  = <<<EOHTML
 <div id="calendar_wrapLarge">
-	<h2 style="text-align:center;">
-	<table id="CalendarLarge-Header" cellspacing="0" cellpadding="0" width="100%" border="0">
+	<h2>
+	<table id="CalendarLarge-Header">
 	<tr>
 		<td width="25%"><div align="left"><span id="EC_previousMonthLarge"></span></div></td>
-		<td width="50%"><div id="EC_current-month" align="center"><div id="EC_ajaxLoader"><img src="$ajax_loader"></div>$titMonth $year</div></td>
+		<td width="50%"><div id="EC_current-month"><div id="EC_ajaxLoader"><img src="$ajax_loader"></div>$titMonth $year</div></td>
 		<td width="25%" align="right"><span id="EC_nextMonthLarge"></span></td>
 	</tr>
 	</table>
