@@ -87,7 +87,7 @@ class EC_Management
   /**
 	* Constructor.
 	*/
-	function EC_Management()
+	function __construct()
 	{
 		$this->month = date('m');
 		$this->year = date('Y');
@@ -295,19 +295,19 @@ class EC_Management
         </tr>
         <tr>
           <th scope="row"><label for="EC_startDate"><?php _e('Start Date (YYYY-MM-DD, if blank will be today)','events-calendar'); ?></label></th>
-          <td><input class="ec-edit-form-date" autocomplete="off" type="text" name="EC_startDate" id="EC_startDate"><img src="<?php echo EVENTSCALENDARIMAGESURL; ?>/calendar.gif"></td>
+          <td><input class="ec-edit-form-date" autocomplete="off" type="text" name="EC_startDate" id="EC_startDate" maxlength=10><img src="<?php echo EVENTSCALENDARIMAGESURL; ?>/calendar.gif"></td>
         </tr>
         <tr>
           <th scope="row"><label for="EC_startTime"><?php _e('Start Time (HH:MM, can be blank)','events-calendar'); ?></label></th>
-          <td><input class="ec-edit-form-time" autocomplete="off" type="text" name="EC_startTime" id="EC_startTime"><img src="<?php echo EVENTSCALENDARIMAGESURL; ?>/time.png"><?php /*<img src="<?php echo EVENTSCALENDARIMAGESURL."/time.png";?>" id="EC_start_clockpick" onClick='jQuery("#EC_alertmsg").fadeOut("slow");'>*/?></td>
+          <td><input class="ec-edit-form-time" autocomplete="off" type="text" name="EC_startTime" id="EC_startTime" maxlength=5><img src="<?php echo EVENTSCALENDARIMAGESURL; ?>/time.png"><?php /*<img src="<?php echo EVENTSCALENDARIMAGESURL."/time.png";?>" id="EC_start_clockpick" onClick='jQuery("#EC_alertmsg").fadeOut("slow");'>*/?></td>
         </tr>
         <tr>
           <th scope="row"><label for="EC_endDate"><?php _e('End Date (YYYY-MM-DD, if blank will be same as start date)','events-calendar'); ?></label></th>
-          <td><input class="ec-edit-form-date" autocomplete="off" type="text" name="EC_endDate" id="EC_endDate"><img src="<?php echo EVENTSCALENDARIMAGESURL; ?>/calendar.gif"></td>
+          <td><input class="ec-edit-form-date" autocomplete="off" type="text" name="EC_endDate" id="EC_endDate" maxlength=10><img src="<?php echo EVENTSCALENDARIMAGESURL; ?>/calendar.gif"></td>
         </tr>
         <tr>
           <th scope="row"><label for="EC_endTime"><?php _e('End Time (HH:MM, can be blank)','events-calendar'); ?></label></th>
-          <td><input class="ec-edit-form-time" autocomplete="off" type="text" name="EC_endTime" id="EC_endTime"><img src="<?php echo EVENTSCALENDARIMAGESURL; ?>/time.png"><?php /*<img src="<?php echo EVENTSCALENDARIMAGESURL."/time.png";?>" id="EC_end_clockpick" onClick='jQuery("#EC_alertmsg").fadeOut("slow");'>*/?></td>
+          <td><input class="ec-edit-form-time" autocomplete="off" type="text" name="EC_endTime" id="EC_endTime" maxlength=5><img src="<?php echo EVENTSCALENDARIMAGESURL; ?>/time.png"><?php /*<img src="<?php echo EVENTSCALENDARIMAGESURL."/time.png";?>" id="EC_end_clockpick" onClick='jQuery("#EC_alertmsg").fadeOut("slow");'>*/?></td>
         </tr>
         <tr>
           <th scope="row"><label for="EC_accessLevel"><?php _e('Visibility Level','events-calendar'); ?></label></th>

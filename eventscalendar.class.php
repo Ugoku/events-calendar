@@ -43,7 +43,7 @@ if (!class_exists('EventsCalendar'))
 		var $widget;
 		var $management;
 
-		function EventsCalendar()
+		function __construct()
 		{
 			$this->widget = new EC_Widget();
 			$this->management = new EC_Management();

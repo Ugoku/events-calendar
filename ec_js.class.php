@@ -76,7 +76,7 @@ class EC_JS
 	/**
 	 * constructor.
 	 */
-	function EC_JS()
+	function __construct()
 	{
 		$this->db = new EC_DB();
 		$this->locale = new WP_Locale;

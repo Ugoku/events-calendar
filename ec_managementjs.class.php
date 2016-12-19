@@ -46,7 +46,7 @@ class EC_ManagementJS
 
 	var $db;
 
-	function EC_ManagementJS()
+	function __construct()
 	{
 		$this->db = new EC_DB();
 	}

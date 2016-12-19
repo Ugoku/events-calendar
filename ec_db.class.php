@@ -93,7 +93,7 @@ class EC_DB
 	 * Constructor. 
 	 * Loads the $wpdb global object and makes sure we have the good table name
 	 */
-	function EC_DB()
+	function __construct()
 	{
 		global $wpdb;
 		$this->dbVersion = "108";

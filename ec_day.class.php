@@ -63,7 +63,7 @@ class EC_Day
 	/**
 	 * Constructor.
 	 */
-	function EC_Day()
+	function __construct()
 	{
 		$this->db = new EC_DB();
 	}
