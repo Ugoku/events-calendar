@@ -16,32 +16,28 @@ if (function_exists ('date_default_timezone_set'))
 /** Events-Calendar version */
 define('EVENTSCALENDARVERS', 'Version: 7.0');
 
-/** using native directory separator for paths */
-if (!defined('DS'))
-	define ('DS', DIRECTORY_SEPARATOR);
-
 // Paths
-define('EVENTSCALENDARPATH', ABSPATH.'wp-content/plugins/events-calendar');
+define('EVENTSCALENDARPATH', ABSPATH . 'wp-content/plugins/events-calendar');
 define('EVENTSCALENDARCLASSPATH', EVENTSCALENDARPATH);
 define('ABSWPINCLUDE', ABSPATH.WPINC);
 
 // URLS
-define('EVENTSCALENDARURL', get_option('siteurl').'/wp-content/plugins/events-calendar');
+define('EVENTSCALENDARURL', get_option('siteurl') . '/wp-content/plugins/events-calendar');
 define('EVENTSCALENDARJSURL', EVENTSCALENDARURL.'/js');
 define('EVENTSCALENDARCSSURL', EVENTSCALENDARURL.'/css');
 define('EVENTSCALENDARIMAGESURL', EVENTSCALENDARURL.'/images');
 
 
-require_once(EVENTSCALENDARCLASSPATH.'/ec_day.class.php');
-require_once(EVENTSCALENDARCLASSPATH.'/ec_calendar.class.php');
-require_once(EVENTSCALENDARCLASSPATH.'/ec_db.class.php');
-require_once(EVENTSCALENDARCLASSPATH.'/ec_widget.class.php');
-require_once(EVENTSCALENDARCLASSPATH.'/ec_management.class.php');
+require_once(EVENTSCALENDARCLASSPATH . '/ec_day.class.php');
+require_once(EVENTSCALENDARCLASSPATH . '/ec_calendar.class.php');
+require_once(EVENTSCALENDARCLASSPATH . '/ec_db.class.php');
+require_once(EVENTSCALENDARCLASSPATH . '/ec_widget.class.php');
+require_once(EVENTSCALENDARCLASSPATH . '/ec_management.class.php');
 require_once(ABSPATH.'wp-includes/pluggable.php');
 
 /** Init Localisation */
 load_default_textdomain();
-load_plugin_textdomain('events-calendar',PLUGINDIR.'/'.dirname(plugin_basename(__FILE__)).'/lang');
+load_plugin_textdomain('events-calendar', PLUGINDIR . '/' . dirname(plugin_basename(__FILE__)) . '/lang');
 
 /** DatePicker localisation */
 $locale = get_locale();
@@ -96,15 +92,14 @@ function EC_send_headers()
 	header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 	header("Cache-Control: no-cache, must-revalidate");  // HTTP/1.1
 	header("Pragma: no-cache");                          // HTTP/1.0
-	header("Content-Type: text/html; charset=".get_option('blog_charset'));
+	header("Content-Type: text/html; charset=" . get_option('blog_charset'));
 }
 
 /**
  * Initializes the Events Calendar plugin.
  *
  * The function first check to see if we are in the admin panel.
- * If we're not, it enqueues the jQuery plugins needed by WPEC:
- * bgiframe, dimensions, tooltip and thinkbox.
+ * If we're not, it enqueues the jQuery plugins needed by WPEC: tooltip and thickbox.
  * Then it registers the widget and the widget control with WordPress.
  * @uses EC_Widget
  * @uses EC_Management
@@ -118,11 +113,9 @@ function EventsCalendarINIT()
 
 	if (!$inadmin)
 	{
-		//wp_enqueue_script('jquerybgiframe', '/wp-content/plugins/events-calendar/js/jquery.bgiframe.js', array('jquery'), '2.1');
-		//wp_enqueue_script('jquerydimensions', '/wp-content/plugins/events-calendar/js/jquery.dimensions.js', array('jquery'), '1.0b2');
 		if($options['disableTooltips'] !== 'yes')
 		{
-			wp_enqueue_script('jquerytooltip', '/wp-content/plugins/events-calendar/js/jquery.tooltip.min.js', array('jquery'), '1.3');
+			wp_enqueue_script('jquerytooltip', plugin_dir_url(__FILE__) . 'js/jquery.tooltip.min.js', array('jquery'), '1.3');
 		}
 		wp_enqueue_script('thickbox');
 	}
@@ -131,15 +124,14 @@ function EventsCalendarINIT()
 	// in case there are dependencies between the two.
 	$widget = new EC_Widget();
 	$management = new EC_Management();
-	register_sidebar_widget(__('Events Calendar','events-calendar'), array(&$widget, 'display'));
-	register_widget_control(__('Events Calendar','events-calendar'), array(&$management, 'widgetControl'));
+	wp_register_sidebar_widget('wpec_display', __('Events Calendar','events-calendar'), array(&$widget, 'display'));
+	wp_register_widget_control('wpec_control', __('Events Calendar','events-calendar'), array(&$management, 'widgetControl'));
 }
 
 /**
  * Initializes the Events Calendar admin panel.
  * The function creates a new menu and enqueues a few jquery plugins:
- * bgiframe, dimensions, tooltip, ui.core, ui.datepicker and its language file,
- * clockpicker,
+ * tooltip, ui.core, ui.datepicker and its language file, clockpicker,
  *
  * @uses EC_Management
  */
@@ -148,18 +140,16 @@ function EventsCalendarManagementINIT()
 	$options = get_option ('optionsEventsCalendar');
 	$EC_userLevel = isset ($options['accessLevel']) && !empty ($options['accessLevel']) ? $options['accessLevel'] : 'level_10';
 	$management = new EC_Management();
-	add_menu_page(__('Events Calendar','events-calendar'), __('Events Calendar','events-calendar'), $EC_userLevel, 'events-calendar', array(&$management, 'display'));
+	add_menu_page(__('Events Calendar','events-calendar'), __('Events Calendar','events-calendar'), $EC_userLevel, 'events-calendar', array(&$management, 'display'), 'dashicons-calendar');
 	if(isset($_GET['page']) && strstr($_GET['page'], 'events-calendar'))
 	{
 		global $loc_lang;
-		//wp_enqueue_script('jquerybgiframe', '/wp-content/plugins/events-calendar/js/jquery.bgiframe.js', array('jquery'), '2.1');
-		//wp_enqueue_script('jquerydimensions', '/wp-content/plugins/events-calendar/js/jquery.dimensions.js', array('jquery'), '1.0b2');
 		wp_enqueue_script('jquerytooltip', '/wp-content/plugins/events-calendar/js/jquery.tooltip.min.js', array('jquery'), '1.3');
 		wp_enqueue_script('jqueryuicore', '/wp-content/plugins/events-calendar/js/ui.core.min.js', array('jquery'), '1.5.2');
 		wp_enqueue_script('jqueryuidatepicker', '/wp-content/plugins/events-calendar/js/ui.datepicker.js', array('jquery'), '1.5.2');
 
 		if ($loc_lang !== 'en')
-			wp_enqueue_script('jqueryuidatepickerlang', '/wp-content/plugins/events-calendar/js/i18n/ui.datepicker-'.$loc_lang.'.js', array('jquery'), '1.5.2');
+			wp_enqueue_script('jqueryuidatepickerlang', '/wp-content/plugins/events-calendar/js/i18n/ui.datepicker-' . $loc_lang . '.js', array('jquery'), '1.5.2');
 
 		wp_enqueue_script('jqueryclockpicker', '/wp-content/plugins/events-calendar/js/jquery.clockpick.min.js', array('jquery'), '1.2.6');
 
@@ -186,11 +176,11 @@ function EventsCalendarHeaderScript()
 	require_once(ABSPATH . 'wp-admin/includes/admin.php');
 	// jQuery DOM extreme protection management
 	$options = get_option('optionsEventsCalendar');
-	echo ' <script>',"\n\t";
-	echo 'var ecd = {};',"\n\t";
-	echo 'ecd.jq = jQuery.noConflict('.$options['jqueryextremstatus'].');',"\n\t";
-	echo ' </script>',"\n";
-	echo "<!-- End of script generated by Events Calendar -->\n";
+	echo '<script>';
+	echo 'var ecd = {};';
+	echo 'ecd.jq = jQuery.noConflict(' . $options['jqueryextremstatus'] . ');';
+	echo '</script>';
+	echo "<!-- End of script generated by Events Calendar -->";
 }
 
 /**
@@ -243,15 +233,6 @@ function ec_strstr($haystack, $needle, $before_needle=FALSE)
 		return substr($haystack, $pos + strlen($needle));
 }
 
-/**
- * Displays the large calendar in place of the [[EventsCalendarLarge]] short tag.
- *
- * @param string $content 		the content of the page
- * @return string             the content after the tag
- * @uses ec_strstr()
- * @uses EC_Calendar
- */
-
 
 /* New function with updated function argument at the end of the function. 
  * @bool(true) - echo's out content1
@@ -263,6 +244,7 @@ function filterEventsCalendarLarge()
 	return $calendar->displayLarge(date('Y'), date('m'), "", array(), 7, false);
 }
 
+
 /**
  * Will display the small calendar in sidebar.
  *
@@ -273,6 +255,7 @@ function SidebarEventsCalendar()
 	$calendar = new EC_Calendar();
 	$calendar->displayWidget(date('Y'), date('m'));
 }
+
 
 /**
  * Will display an events list in sidebar.
@@ -293,4 +276,3 @@ add_action('admin_menu', 'EventsCalendarManagementINIT');
 add_action('wp_head', 'EventsCalendarHeaderScript');
 add_action('admin_head', 'EventsCalendarAdminHeaderScript');
 add_shortcode('events-calendar-large', 'filterEventsCalendarLarge');
-?>

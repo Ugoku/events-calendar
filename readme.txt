@@ -3,8 +3,8 @@
 Contributors: Sander de Jong, Luke Howell
 Version: 7.0
 Tags: event, calendar, date, time, widget, admin, sidebar, plugin, javascript, thickbox, jquery, tooltip, ajax
-Requires at least: 3.6.0
-Tested up to: 3.6.1
+Requires at least: 3.8.0
+Tested up to: 4.0
 Stable tag: 7.0
 
 Events-Calendar is a versatile replacement for the original WordPress calendar adding many useful functions to keep track of your events.
@@ -37,8 +37,8 @@ The ability to add a large public calendar is available by posting a page and ad
 == Upgrade Notice ==
 = 7.0 =
 * First release by new contributor. Mostly code cleanup, no new features but some bugs fixed.
-* This version breaks XHTML validation. If you are still using XHTML for your website, please consider switching to HTML5.
-* This version removes IE6 hacks so if you still care about a 12-year old browser (you shouldn't), don't use this plugin.
+* This version breaks XHTML validation. If you are still using XHTML for your website, consider switching to HTML5.
+* This version removes IE6 hacks.
 
 = 6.7.13 =
 * This update fixes the issue with slashes in events.  This will work on new events, and will be corrected when editing events.  Backup before upgrading.
